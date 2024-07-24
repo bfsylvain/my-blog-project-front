@@ -1,0 +1,25 @@
+@mixin card-global {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin avatar-round-small {
+  border: none;
+  width: 30px;
+  height: 30px;
+  @include flex-center;
+  overflow: hidden;
+  border-radius: 50%;
+}

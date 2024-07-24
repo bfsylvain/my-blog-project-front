@@ -1,0 +1,73 @@
+@import "../../styles/variables";
+
+.blog-article {
+  padding-top: $nav-space;
+
+  .article-header {
+    height: 35vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1,
+    p {
+      color: white;
+    }
+
+    h1 {
+      margin-top: 3rem;
+    }
+  }
+  .article-text-area {
+    padding: 20px 15%;
+    .article-text {
+      text-align: justify;
+    }
+  }
+  .carousel-area {
+    .carousel {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  .comments-section {
+    margin: 20px 0;
+
+    .accordion {
+      .accordion-item {
+        .collapse {
+          .collapse-content {
+            .accordion-body {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 1rem;
+            }
+          }
+        }
+      }
+    }
+    .leave-comment-area {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 75%;
+      gap: 2px;
+
+      textarea {
+        width: 75%;
+        resize: none;
+        border-radius: 5px;
+      }
+
+      button {
+        border-radius: 5px;
+        border: none;
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+}

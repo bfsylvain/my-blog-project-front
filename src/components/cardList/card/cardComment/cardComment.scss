@@ -1,0 +1,18 @@
+@import "../../../../styles/mixins";
+
+.card-comment {
+  display: flex;
+  gap: 5px;
+  @include card-global;
+  width: 75%;
+
+  .author-img {
+    @include avatar-round-small
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+}

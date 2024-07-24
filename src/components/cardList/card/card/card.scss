@@ -1,0 +1,58 @@
+@import "../../../../styles/mixins";
+
+.card {
+  width: 300px;
+
+  .card-img {
+    height: 150px;
+  }
+  .description-area {
+    padding: 0.5rem;
+
+    .creation-area {
+      @include flex-between;
+      .author-area {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        .author-name {
+          margin: 0;
+        }
+        .author-img {
+          @include avatar-round-small
+        }
+      }
+      .post-date {
+        margin: 0;
+      }
+    }
+    .card-title-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .card-title {
+        margin: 0.5rem 0;
+        min-height: 77px;
+        text-align: center;
+      }
+    }
+    .content-preview {
+      overflow: hidden;
+      line-height: 1.5rem;
+      min-height: 3rem;
+      max-height: 6rem;
+      -webkit-box-orient: vertical;
+      display: block;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+    }
+    .action-area {
+      @include flex-center;
+      .like-img {
+        width: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "../../styles/variables";
+.card-page {
+  padding-top: $nav-space;
+  .add-article {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .card-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}

@@ -1,0 +1,12 @@
+.error-container {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    .error-message {
+        display: none;
+        &.active {
+            display: block;
+            color: red
+        }
+    }
+}

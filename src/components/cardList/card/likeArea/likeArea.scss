@@ -1,0 +1,8 @@
+@import "../../../../styles/mixins";
+
+.action-area {
+    @include flex-center;
+    .like-img {
+      width: 20px;
+    }
+  }
