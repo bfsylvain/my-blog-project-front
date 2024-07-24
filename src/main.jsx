@@ -11,6 +11,7 @@ import { AppContextProvider } from "./Contexts/AppContext.jsx";
 import { ArticleContextProvider } from "./Contexts/ArticleContext.jsx";
 import userLoader from "./loaders/user.loader.jsx";
 import ErrorPage from "./pages/error/ErrorPage.jsx";
+import ProtectedRoute from "./components/routeProtection/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         path: "/new-article",
         element: (
           <ArticleContextProvider>
-            <NewArticle />
+            <ProtectedRoute element={<NewArticle />}/>
           </ArticleContextProvider>
         ),
       },
