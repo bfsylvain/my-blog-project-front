@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./card.scss";
-import defaultAvatar from "../../../../../public/uploads/pictures/default-avatar.png";
 import { UseArticle } from "../../../../Contexts/ArticleContext";
 import { UseApp } from "../../../../Contexts/AppContext";
 import LikeArea from "../likeArea/LikeArea";
 
 export default function Card({ article }) {
   const { userInfo } = UseApp();
-  const { backendUrl } = UseArticle();
-
+  const { backendUrl, createShortFrenchDate } = UseArticle();
+  const creationDate = article ? createShortFrenchDate(article.updatedAt): "";
+  console.log(article)
+  
+  console.log(article);
     return (
       <>
         <article className="card">
@@ -28,12 +30,12 @@ export default function Card({ article }) {
                 <div className="author-area">
                   <img
                     className="author-img"
-                    src={defaultAvatar}
+                    src={`${backendUrl}/public${article.userAvatar}`}
                     alt="author-img"
                   />
-                  <p className="author-name">author name</p>
+                  <p className="author-name">{article.userPseudo}</p>
                 </div>
-                <p className="post-date">date</p>
+                <p className="post-date">{creationDate}</p>
               </section>
             </header>
             <div className="card-title-area">

@@ -11,14 +11,12 @@ import { UseArticle } from "../../Contexts/ArticleContext";
 import { useEffect, useState } from "react";
 
 function Article() {
-
   const { id } = useParams();
-  const userInfo = useOutletContext(); 
-  console.log(userInfo);
+  const userInfo = useOutletContext();
   const { backendUrl, createFrenchDate, fetchArticleById, postComment } =
     UseArticle();
   const [article, setArticle] = useState();
-  const headerBackgroudImage =`
+  const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
   url(${backendUrl}/public${article?.pictures[0]})
   `;
@@ -28,7 +26,7 @@ function Article() {
     userPseudo: userInfo?.pseudo,
     text: "",
   });
-  const creationDate = article ? createFrenchDate(article.updatedAt): "";
+  const creationDate = article ? createFrenchDate(article.createdAt) : "";
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -44,11 +42,11 @@ function Article() {
 
   const handleComment = (e) => {
     e.preventDefault();
-    if (comment) {
-      postComment(article?.id, comment);
+    if (comment.text) {
+      postComment(id, comment);
       setComment({
-        userId: userInfo.id,
-        userPseudo: userInfo.pseudo,
+        userId: userInfo?.id,
+        userPseudo: userInfo?.pseudo,
         text: "",
       });
     }
@@ -56,81 +54,81 @@ function Article() {
 
   return (
     <>
-    {article && (
-      <article className="blog-article">
-      <header
-        className="article-header"
-        style={{ backgroundImage: headerBackgroudImage }}
-      >
-        <h1>{article?.title}</h1>
-        <p>{`Le ${creationDate}`}</p>
-      </header>
-      <section className="article-text-area">
-        <p className="article-text">{article.text}</p>
-      </section>
-      <section className="carousel-area">
-        <section className="carousel">
-          <MDBCarousel showControls>
-            <MDBCarouselItem itemId={1}>
-              <img
-                src={`${backendUrl}/public${article.pictures[0]}`}
-                className="d-block w-100"
-                alt="..."
-              />
-            </MDBCarouselItem>
-            <MDBCarouselItem itemId={2}>
-              <img
-                src="https://mdbootstrap.com/img/new/slides/042.jpg"
-                className="d-block w-100 "
-                alt="..."
-              />
-            </MDBCarouselItem>
-            <MDBCarouselItem itemId={3}>
-              <img
-                src="https://mdbootstrap.com/img/new/slides/043.jpg"
-                className="d-block w-100"
-                alt="..."
-              />
-            </MDBCarouselItem>
-          </MDBCarousel>
-        </section>
-      </section>
-      <section className="comments-section">
-        <MDBAccordion alwaysOpen initialActive={2}>
-          <MDBAccordionItem
-            collapseId={1}
-            headerTitle="Commentaires de visiteurs"
+      {article && (
+        <article className="blog-article">
+          <header
+            className="article-header"
+            style={{ backgroundImage: headerBackgroudImage }}
           >
-            <CardComment />
-            <CardComment />
-            <CardComment />
-          </MDBAccordionItem>
-          {userInfo && (
-            <MDBAccordionItem
-              collapseId={2}
-              headerTitle="Laisser un commentaire"
-            >
-              <textarea
-                type="text"
-                name="text"
-                id=""
-                placeholder="Votre commentaire"
-                onChange={onChange}
-              />
-              <button
-                className="send-comment-btn"
-                type="submit"
-                onClick={handleComment}
+            <h1>{article?.title}</h1>
+            <p>{`Le ${creationDate}`}</p>
+          </header>
+          <section className="article-text-area">
+            <p className="article-text">{article.text}</p>
+          </section>
+          <section className="carousel-area">
+            <section className="carousel">
+              <MDBCarousel showControls>
+                <MDBCarouselItem itemId={1}>
+                  <img
+                    src={`${backendUrl}/public${article.pictures[0]}`}
+                    className="d-block w-100"
+                    alt="..."
+                  />
+                </MDBCarouselItem>
+                <MDBCarouselItem itemId={2}>
+                  <img
+                    src="https://mdbootstrap.com/img/new/slides/042.jpg"
+                    className="d-block w-100 "
+                    alt="..."
+                  />
+                </MDBCarouselItem>
+                <MDBCarouselItem itemId={3}>
+                  <img
+                    src="https://mdbootstrap.com/img/new/slides/043.jpg"
+                    className="d-block w-100"
+                    alt="..."
+                  />
+                </MDBCarouselItem>
+              </MDBCarousel>
+            </section>
+          </section>
+          <section className="comments-section">
+            <MDBAccordion alwaysOpen initialActive={2}>
+              <MDBAccordionItem
+                collapseId={1}
+                headerTitle="Commentaires de visiteurs"
               >
-                envoyer
-              </button>
-            </MDBAccordionItem>
-          )}
-        </MDBAccordion>
-      </section>
-    </article>
-
-    )}
+                {article.comments.map((comment) => (
+                  <CardComment key={comment._id} comment={comment} />
+                ))}
+              </MDBAccordionItem>
+              {userInfo && (
+                <MDBAccordionItem
+                  collapseId={2}
+                  headerTitle="Laisser un commentaire"
+                >
+                  <textarea
+                    type="text"
+                    name="text"
+                    id=""
+                    placeholder="Votre commentaire"
+                    value={comment.text}
+                    onChange={onChange}
+                  />
+                  <button
+                    className="send-comment-btn"
+                    type="submit"
+                    onClick={handleComment}
+                  >
+                    envoyer
+                  </button>
+                </MDBAccordionItem>
+              )}
+            </MDBAccordion>
+          </section>
+        </article>
+      )}
     </>
   );
 }

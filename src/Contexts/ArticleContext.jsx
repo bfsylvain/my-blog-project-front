@@ -20,6 +20,13 @@ export function ArticleContextProvider({ children }) {
     }).format(date);
     return adjustedDate;
   }, []);
+  const createShortFrenchDate = useCallback((dateToChange) => {
+    const date = new Date(dateToChange);
+    const adjustedDate = new Intl.DateTimeFormat("fr-FR", {
+      dateStyle: "short",
+    }).format(date);
+    return adjustedDate;
+  },[])
 
   //Récupère tous les articles
   const fetchArticles = useCallback(async () => {
@@ -116,6 +123,7 @@ export function ArticleContextProvider({ children }) {
       backendUrl,
       cardList,
       createFrenchDate,
+      createShortFrenchDate,
       fetchArticles,
       fetchArticleById,
       likePost,
@@ -128,6 +136,7 @@ export function ArticleContextProvider({ children }) {
       backendUrl,
       cardList,
       createFrenchDate,
+      createShortFrenchDate,
       fetchArticles,
       fetchArticleById,
       likePost,
