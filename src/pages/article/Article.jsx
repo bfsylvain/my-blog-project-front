@@ -5,10 +5,10 @@ import {
   MDBCarouselItem,
 } from "mdb-react-ui-kit";
 import "./article.scss";
-import CardComment from "../../components/cardList/card/cardComment/CardComment";
 import { useOutletContext, useParams } from "react-router-dom";
 import { UseArticle } from "../../Contexts/ArticleContext";
 import { useEffect, useState } from "react";
+import CommentArea from "../../components/article/CommentArea";
 
 function Article() {
   const { id } = useParams();
@@ -43,6 +43,7 @@ function Article() {
   const handleComment = (e) => {
     e.preventDefault();
     if (comment.text) {
+      console.log(comment)
       postComment(id, comment);
       setComment({
         userId: userInfo?.id,
@@ -51,7 +52,6 @@ function Article() {
       });
     }
   };
-
   return (
     <>
       {article && (
@@ -99,9 +99,7 @@ function Article() {
                 collapseId={1}
                 headerTitle="Commentaires de visiteurs"
               >
-                {article.comments.map((comment) => (
-                  <CardComment key={comment._id} comment={comment} />
-                ))}
+                <CommentArea articleComments={article.comments} userInfo={userInfo}/>
               </MDBAccordionItem>
               {userInfo && (
                 <MDBAccordionItem

@@ -46,7 +46,6 @@ export function ArticleContextProvider({ children }) {
         `${backendUrl}/api/articles/${id}`
       );
       if (response) {
-        console.log(response.data);
         return response.data
       } else {
         return null;
@@ -105,11 +104,12 @@ export function ArticleContextProvider({ children }) {
   const postComment = useCallback(
     async (articleId, commentData) => {
       try {
-        await axios.patch(
+        const newComment = await axios.patch(
           `${backendUrl}/api/articles/${articleId}/comments`,
           commentData,
           { withCredentials: true }
         );
+        console.log(newComment);
       } catch (err) {
         console.error(err);
       }

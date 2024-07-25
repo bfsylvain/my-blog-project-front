@@ -9,9 +9,7 @@ export default function Card({ article }) {
   const { userInfo } = UseApp();
   const { backendUrl, createShortFrenchDate } = UseArticle();
   const creationDate = article ? createShortFrenchDate(article.updatedAt): "";
-  console.log(article)
   
-  console.log(article);
     return (
       <>
         <article className="card">

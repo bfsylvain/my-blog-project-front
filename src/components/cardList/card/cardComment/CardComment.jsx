@@ -4,9 +4,7 @@ import { UseArticle } from "../../../../Contexts/ArticleContext";
 
 export default function CardComment({comment}) {
   const {createShortFrenchDate, backendUrl} = UseArticle();
-  console.log(backendUrl);
-  console.log(comment?.userAvatar);
-  console.log(comment);
+  
   return (
     <div className="card-comment">
       <section className="img-area">

@@ -16,7 +16,7 @@ function App() {
     ?.split("=")[1]
     if (jwtValue){
       const decodedToken = jwtDecode(jwtValue);
-      setUserInfo({id: decodedToken.id.id, pseudo: decodedToken.id.pseudo});
+      setUserInfo({id: decodedToken.id.id, pseudo: decodedToken.id.pseudo, avatar: decodedToken.id.avatar});
     }
   }, [setUserInfo]);
 
