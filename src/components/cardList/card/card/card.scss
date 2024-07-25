@@ -5,8 +5,9 @@
 
   .card-img-area {
     height: 150px;
+    overflow: hidden;
     .card-img {
-      height: 150px;
+      max-width:300px;
     }
   }
   .description-area {

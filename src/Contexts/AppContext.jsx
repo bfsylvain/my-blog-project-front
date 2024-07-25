@@ -15,7 +15,6 @@ const AppContext = createContext();
 export function AppContextProvider({ children }) {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-
   const [userInfo, setUserInfo] = useState(null);
 
   const [signInForm, setSignInForm] = useState({
@@ -43,7 +42,6 @@ export function AppContextProvider({ children }) {
       setOnHoldNavigate(false);
     }
   }, [onHoldNavigate, userInfo, navigate]);
-
 
   //Récupération du token
   const fetchToken = useCallback(async () => {

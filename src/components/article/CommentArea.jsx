@@ -26,8 +26,8 @@ export default function CommentArea({ articleComments, userInfo }) {
     e.preventDefault();
     if (comment.text) {
         console.log(comment);
-        // setCommentList([...commentList, comment])
         postComment(userInfo.id, comment);
+        // setCommentList([...commentList, comment])
       setComment({
         _id: uuidv4(),
         userId: userInfo.id,

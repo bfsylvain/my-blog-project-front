@@ -6,7 +6,6 @@ import axios from "axios";
 
 export default function Navbar({ userInfo }) {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
   const disconnect = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/logOut`);
@@ -29,7 +28,7 @@ export default function Navbar({ userInfo }) {
       </Link>
       <ul>
         <Link to="/">
-          <li>Accueil</li>
+          <li >Accueil</li>
         </Link>
         <Link to="/articles">
           <li>Articles</li>
