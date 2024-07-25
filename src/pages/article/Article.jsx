@@ -35,7 +35,7 @@ function Article() {
   const handleComment = (e) => {
     e.preventDefault();
     if (comment.text) {
-      console.log(comment)
+      console.log("article", comment)
       postComment(id, comment);
       setComment({
         userId: userInfo?.id,

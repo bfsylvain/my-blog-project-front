@@ -12,6 +12,7 @@ import { ArticleContextProvider } from "./Contexts/ArticleContext.jsx";
 import ErrorPage from "./pages/error/ErrorPage.jsx";
 import ProtectedRoute from "./components/routeProtection/ProtectedRoute.jsx";
 import articleLoader from "./loaders/article.loader.jsx";
+import HomePage from "./pages/homePage/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       </AppContextProvider>
     ),
     children: [
+      {
+        path: "/",
+        element: <HomePage/>
+      },
       {
         path: "/articles",
         element: (

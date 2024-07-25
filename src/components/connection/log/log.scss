@@ -1,0 +1,35 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.connection-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .form-container {
+    @include flex-center;
+    gap: 4rem;
+    width: 60%;
+    max-width: 600px;
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid black;
+    border-radius: 20px;
+    .sidebar {
+      display: flex;
+      height: 100%;
+      width: 33%;
+
+      .sidebar-list {
+        list-style-type: none;
+        li {
+          margin: 1.5rem 0;
+          &.active {
+            color: $primary-orange;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+

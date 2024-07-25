@@ -71,12 +71,13 @@ export default function NewArticle() {
             name="text"
             id=""
             value={articleValue.text}
+            rows={10}
             onChange={onChange}
             className="text"
           ></textarea>
         </fieldset>
         <fieldset className="file-upload field">
-          <h3 className="area-title">Ajoutez une image</h3>
+          <h3 className="area-title upload">Ajoutez une image</h3>
           <label htmlFor="file-upload" className="upload-label">
             <img className="add-button-img" src={AddIcon} />
           </label>

@@ -1,7 +1,17 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+
+.success-creation {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
 .error-container {
     height: 3rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     .error-message {
         display: none;
         &.active {
@@ -9,4 +19,46 @@
             color: red
         }
     }
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .field-input {
+        @include flex-center;
+        text-align: center;
+        height: 3rem;
+        line-height: 3rem;
+        border: none;
+        background-color: $primary-orange;
+        border-radius: 20px;
+      }
+  }
+
+  .button-area {
+    display: flex;
+    justify-content: center;
+    .submit-btn {
+      min-width: 179px;
+      max-width: 210px;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 2rem;
+      background-color: $primary-purple;
+      color: white;
+      &:hover {
+        color: black;
+        background-color: $primary-orange;
+      }
+
+    }
+  }
+
+
 }

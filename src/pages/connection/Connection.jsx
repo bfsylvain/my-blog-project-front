@@ -4,7 +4,7 @@ import "./connection.scss";
 export default function Connection() {
   return (
     <div className="user-connection">
-      <h1>CONNEXION</h1>
+      <h1 className="title">CONNEXION</h1>
       <Log/>
     </div>
   )

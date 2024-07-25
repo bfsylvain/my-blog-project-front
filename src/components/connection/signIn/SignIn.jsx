@@ -14,31 +14,38 @@ export default function SignIn() {
 
   return (
     <div>
-      <h1>Se connecter</h1>
+      <h1>Connection</h1>
       <div className="error-container">
         <p className={`error-message ${wrongId ? "active" : ""}`}>
           Identifiants incorrects !
         </p>
       </div>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={signInForm.email}
-          onChange={handleFormValue}
-        />
-        <br />
-        <label htmlFor="password">Mot de passe</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={signInForm.password}
-          onChange={handleFormValue}
-        />
-        <input type="submit" value="Se connecter" />
+      <form className="signin-form" onSubmit={handleLogin}>
+        <fieldset className="field email">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="field-input"
+            value={signInForm.email}
+            onChange={handleFormValue}
+          />
+        </fieldset>
+        <fieldset className="field password">
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="field-input"
+            value={signInForm.password}
+            onChange={handleFormValue}
+          />
+        </fieldset>
+        <div className="button-area">
+          <input type="submit" value="Se connecter" className="submit-btn" />
+        </div>
       </form>
     </div>
   );

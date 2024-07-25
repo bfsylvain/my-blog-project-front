@@ -5,10 +5,15 @@
   padding-top: $nav-space;
   .add-article {
     @include flex-center;
-    padding: 20px 0;
+    padding: 10px 0;
 
     .add-article-btn {
       @include button;
+      margin-bottom: 1.3rem;
+      &:hover {
+        color: black;
+        background-color: $primary-purple;
+      } 
     }
   }
   .card-area {

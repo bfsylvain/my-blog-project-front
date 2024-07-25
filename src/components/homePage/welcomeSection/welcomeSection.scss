@@ -1,0 +1,30 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.welcome-section {
+    background-image: url("../../../assets/images/heaven-island.jpg") ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 70vh;
+    background-color: lightgrey;
+    @include flex-center;
+    flex-direction: column;
+
+    .text-section {
+        @include flex-center;
+        flex-direction: column;
+    
+        .text {
+            width: 50vw;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    }
+    .subscribe-button {
+        color: black;
+        margin: 2rem 1rem;
+        @include button;
+        text-align: center;
+    }
+}

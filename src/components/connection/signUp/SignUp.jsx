@@ -34,7 +34,7 @@ export default function SignUp() {
     <div>
       {formSubmit ? (
         <>
-          <h4 className="success-c-creation">
+          <h4 className="success-creation">
             Enregistrement réussi, veuillez vous connecter
           </h4>
           <SignIn />
@@ -47,49 +47,64 @@ export default function SignUp() {
               {errorMessage}
             </p>
           </div>
-          <form onSubmit={handleLogin}>
-            <label htmlFor="pseudo">Pseudo</label>
-            <input
-              type="text"
-              id="pseudo"
-              name="pseudo"
-              value={signUpForm.pseudo}
-              onChange={handleFormValue}
-            />
-            <br />
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={signUpForm.email}
-              onChange={handleFormValue}
-            />
-            <br />
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={signUpForm.password}
-              onChange={handleFormValue}
-            />
-            <br />
-            <label htmlFor="verification">Vérification</label>
-            <input
-              type="password"
-              id="verification"
-              name="verification"
-              value={passWordVerification}
-              onChange={handlePasswordVerification}
-            />
-            <br />
+
+          <form className="signup-form" onSubmit={handleLogin}>
+            <fieldset className="field pseudo">
+              <label htmlFor="pseudo">Pseudo</label>
+              <input
+                type="text"
+                id="pseudo"
+                name="pseudo"
+                value={signUpForm.pseudo}
+                onChange={handleFormValue}
+                className="field-input"
+              />
+            </fieldset>
+            <fieldset className="field email">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={signUpForm.email}
+                onChange={handleFormValue}
+                className="field-input"
+              />
+            </fieldset>
+            <fieldset className="field password">
+              <label htmlFor="password">Mot de passe</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={signUpForm.password}
+                onChange={handleFormValue}
+                className="field-input"
+              />
+            </fieldset>
+            <fieldset className="field verification">
+              <label htmlFor="verification">Vérification</label>
+              <input
+                type="password"
+                id="verification"
+                name="verification"
+                value={passWordVerification}
+                onChange={handlePasswordVerification}
+                className="field-input"
+              />
+            </fieldset>
             <div className="error-container">
               <p className={`error-message ${!passwordMatch ? "active" : ""}`}>
                 Mot de passe différent
               </p>
             </div>
-            <input type="submit" value="Se connecter" />
+            <div className="button-area">
+              <input
+                type="submit"
+                value="Se connecter"
+                className="submit-btn"
+              />
+            </div>
           </form>
         </div>
       )}
