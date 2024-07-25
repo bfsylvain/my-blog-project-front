@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import "./navbar.scss";
 import axios from "axios";
 
