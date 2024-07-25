@@ -37,7 +37,7 @@ export default function Card({ article }) {
               </section>
             </header>
             <div className="card-title-area">
-              <h2 className="card-title">{article.title}</h2>
+              <h4 className="card-title">{article.title}</h4>
             </div>
             <p className="content-preview">{article.text}</p>
             <LikeArea article={article} userInfo={userInfo}/>

@@ -17,7 +17,7 @@ const userInfo = useOutletContext();
       <section className="add-article">
         {userInfo && 
         (<Link to={"/new-article"}>
-          <button>Ajouter un article</button>
+          <button className="add-article-btn">Ajouter un article</button>
         </Link>)}
       </section>
       <section className="card-area">

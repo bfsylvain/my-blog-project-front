@@ -1,20 +1,56 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
+.new-article {
+  padding-top: $nav-space;
+  @include flex-center;
+  flex-direction: column;
+  .article-form {
+    @include flex-center;
+    flex-direction: column;
+    gap: 4rem;
+    width: 60%;
+    max-width: 600px;
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid black;
+    .field {
+      @include flex-center;
+      flex-direction: column;
+      width: 100%;
+      .area-title {
+        font-size: 1.5rem;
+        font-weight: 540;
+      }
+      textArea {
+        border: none;
+        background-color: $primary-orange;
+        resize: none;
+        border-radius: 20px;
+        width: 80%;
+        padding-top: 0.5rem;
+        &.title {
+          text-align: center;
+          vertical-align: middle;
+        }
 
-.new-article{
-    padding-top: $nav-space;
-    .add-button-img {
-        display: inline-block;
-        width: 50px;
+      }
     }
-    .file-upload {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-    
-      input {
-        display: none;
-      }
-        
+  }
+  .add-button-img {
+    display: inline-block;
+    width: 50px;
+  }
+  .file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input {
+    display: none;
+  }
+
+  .button {
+    @include button;
+  }
 }

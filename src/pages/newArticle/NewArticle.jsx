@@ -16,20 +16,19 @@ export default function NewArticle() {
     text: "",
   });
 
-  const [imagePreview, setImagePreview] = useState(null)
-  const [selectedImage, setSelectedImage] = useState(null)
+  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const onChange = (e) => {
     setArticleValue({ ...articleValue, [e.target.name]: e.target.value });
   };
 
   const onChangePicture = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       setImagePreview(URL.createObjectURL(file));
       setSelectedImage(file);
-  }
-}
+    }
+  };
 
   const createArticle = async (e) => {
     e.preventDefault();
@@ -48,33 +47,51 @@ export default function NewArticle() {
 
   return (
     <div className="new-article">
-      <h1>NEW ARTICLE</h1>
-      <form onSubmit={createArticle}>
-        <h4>Titre</h4>
-        <textarea
-          label="Votre texte"
-          name="title"
-          id="title"
-          value={articleValue.title}
-          onChange={onChange}
-        ></textarea>
-        <h4>Votre texte</h4>
-        <textarea
-          label="Votre texte"
-          name="text"
-          id=""
-          value={articleValue.text}
-          onChange={onChange}
-        ></textarea>
-        <div className="file-upload">
+      <h1>NOUVEL ARTICLE</h1>
+      <form onSubmit={createArticle} className="article-form">
+        <fieldset className="field">
+          <label htmlFor="title" className="area-title">
+            Titre
+          </label>
+          <textarea
+            label="Votre texte"
+            name="title"
+            id="title"
+            value={articleValue.title}
+            onChange={onChange}
+            className="title"
+          ></textarea>
+        </fieldset>
+        <fieldset className="field">
+          <label htmlFor="texte" className="area-title">
+            Votre texte
+          </label>
+          <textarea
+            label="Votre texte"
+            name="text"
+            id=""
+            value={articleValue.text}
+            onChange={onChange}
+            className="text"
+          ></textarea>
+        </fieldset>
+        <fieldset className="file-upload field">
+          <h3 className="area-title">Ajoutez une image</h3>
           <label htmlFor="file-upload" className="upload-label">
             <img className="add-button-img" src={AddIcon} />
           </label>
-          <input id="file-upload" type="file" name="file" onChange={onChangePicture} />
-        </div>
+          <input
+            id="file-upload"
+            type="file"
+            name="file"
+            onChange={onChangePicture}
+          />
         <img src={imagePreview} alt="" />
+        </fieldset>
 
-        <button type="submit">Envoyer</button>
+        <button type="submit" className="button">
+          Envoyer
+        </button>
       </form>
     </div>
   );

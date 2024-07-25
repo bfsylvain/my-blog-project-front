@@ -1,10 +1,15 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
+
 .card-page {
   padding-top: $nav-space;
   .add-article {
-    display: flex;
-    justify-content: center;
+    @include flex-center;
     padding: 20px 0;
+
+    .add-article-btn {
+      @include button;
+    }
   }
   .card-area {
     display: flex;
