@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-  <Navbar/>
+  <Navbar userInfo={userInfo}/>
   <main><Outlet context={userInfo}/></main>
     </>
   )

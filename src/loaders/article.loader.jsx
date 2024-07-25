@@ -1,8 +1,8 @@
 import fetchArticleData from "../utils/articles/FetchArticleData";
 
 const articleLoader = async ({params}) => {
-   const response = await fetchArticleData({params})
-   return response
+   const article = await fetchArticleData({params})
+   return article
 }
 
 export default articleLoader;

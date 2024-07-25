@@ -4,7 +4,7 @@ const fetchArticleData = async ({params}) => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/articles/${params.id}`)
         if(response) {
-            return {article: response.data};
+            return response.data;
         } else {
             return null;
         }

@@ -9,9 +9,9 @@ import NewArticle from "./pages/newArticle/NewArticle.jsx";
 import Connection from "./pages/connection/Connection.jsx";
 import { AppContextProvider } from "./Contexts/AppContext.jsx";
 import { ArticleContextProvider } from "./Contexts/ArticleContext.jsx";
-import userLoader from "./loaders/user.loader.jsx";
 import ErrorPage from "./pages/error/ErrorPage.jsx";
 import ProtectedRoute from "./components/routeProtection/ProtectedRoute.jsx";
+import articleLoader from "./loaders/article.loader.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,6 @@ const router = createBrowserRouter([
         <App />
       </AppContextProvider>
     ),
-    loader: userLoader,
     children: [
       {
         path: "/articles",
@@ -34,6 +33,7 @@ const router = createBrowserRouter([
       {
         path: "/article/:id",
         errorElement: <ErrorPage/>,
+        loader: articleLoader,
         element: (
           <ArticleContextProvider>
             <Article />

@@ -5,20 +5,20 @@ import {
   MDBCarouselItem,
 } from "mdb-react-ui-kit";
 import "./article.scss";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import { UseArticle } from "../../Contexts/ArticleContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea";
 
 function Article() {
   const { id } = useParams();
   const userInfo = useOutletContext();
-  const { backendUrl, createFrenchDate, fetchArticleById, postComment } =
+  const articleData = useLoaderData();
+  const { backendUrl, createFrenchDate, postComment } =
     UseArticle();
-  const [article, setArticle] = useState();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
-  url(${backendUrl}/public${article?.pictures[0]})
+  url(${backendUrl}/public${articleData.pictures[0]})
   `;
 
   const [comment, setComment] = useState({
@@ -26,15 +26,7 @@ function Article() {
     userPseudo: userInfo?.pseudo,
     text: "",
   });
-  const creationDate = article ? createFrenchDate(article.createdAt) : "";
-
-  useEffect(() => {
-    const loadArticle = async () => {
-      const articleData = await fetchArticleById(id);
-      setArticle(articleData);
-    };
-    loadArticle();
-  }, [fetchArticleById, id, createFrenchDate, article?.updatedAt]);
+  const creationDate = createFrenchDate(articleData.createdAt);
 
   const onChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -54,24 +46,23 @@ function Article() {
   };
   return (
     <>
-      {article && (
         <article className="blog-article">
           <header
             className="article-header"
             style={{ backgroundImage: headerBackgroudImage }}
           >
-            <h1>{article?.title}</h1>
+            <h1>{articleData.title}</h1>
             <p>{`Le ${creationDate}`}</p>
           </header>
           <section className="article-text-area">
-            <p className="article-text">{article.text}</p>
+            <p className="article-text">{articleData.text}</p>
           </section>
           <section className="carousel-area">
             <section className="carousel">
               <MDBCarousel showControls>
                 <MDBCarouselItem itemId={1}>
                   <img
-                    src={`${backendUrl}/public${article.pictures[0]}`}
+                    src={`${backendUrl}/public${articleData.pictures[0]}`}
                     className="d-block w-100"
                     alt="..."
                   />
@@ -99,7 +90,7 @@ function Article() {
                 collapseId={1}
                 headerTitle="Commentaires de visiteurs"
               >
-                <CommentArea articleComments={article.comments} userInfo={userInfo}/>
+                <CommentArea articleComments={articleData.comments} userInfo={userInfo}/>
               </MDBAccordionItem>
               {userInfo && (
                 <MDBAccordionItem
@@ -126,7 +117,6 @@ function Article() {
             </MDBAccordion>
           </section>
         </article>
-      )}
     </>
   );
 }
