@@ -3,7 +3,6 @@ import "./welcomeSection.scss";
 
 export default function WelcomeSection() {
   const userInfo = useOutletContext();
-  console.log(userInfo)
   return (
     <div className="welcome-section">
       <div className="text-section">
