@@ -10,7 +10,6 @@ function CardList() {
   useEffect(() => {
     fetchArticles();
   }, [fetchArticles]);
-
   return (
     <section className="card-page">
       <section className="add-article">

@@ -32,6 +32,7 @@ export function ArticleContextProvider({ children }) {
   const fetchArticles = useCallback(async () => {
     try {
       const result = await axios.get(`${backendUrl}/api/articles`);
+      console.log(result)
       setCardList(result.data);
     } catch (err) {
       console.error("error fetching data");

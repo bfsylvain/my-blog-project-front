@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { UseArticle } from "../../../../Contexts/ArticleContext";
 import "./likeArea.scss";
+import "reactjs-popup/dist/index.css";
+import Popup from "reactjs-popup";
 import emptyHeart from "../../../../assets/icons/empty-heart-icon.svg";
 import redHeart from "../../../../assets/icons/red-heart-icon.svg";
 
@@ -24,7 +26,15 @@ export default function LikeArea({ article, userInfo }) {
 
   return (
     <section className="action-area">
-      {!userInfo && <img className="like-img" src={emptyHeart} alt="like" />}
+      {!userInfo && (
+        <Popup
+          trigger={<img className="like-img" src={emptyHeart} alt="like" />}
+          position={["bottom center", "bottom right", "bottom left"]}
+          closeOnDocumentClick
+        >
+          <div>connectez vous pour liker un post !</div>
+        </Popup>
+      )}
       {userInfo && !liked && (
         <img className="like-img" src={emptyHeart} alt="like" onClick={like} />
       )}
