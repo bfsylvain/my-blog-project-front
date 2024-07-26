@@ -10,9 +10,12 @@
     @include avatar-round-small
   }
 
-  .comment-header {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 3px;
+  .comment-area {
+    width: 100%;
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+    }
   }
 }
