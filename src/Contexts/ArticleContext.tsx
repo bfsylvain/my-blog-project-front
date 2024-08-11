@@ -7,20 +7,22 @@ import {
 } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { ArticleToPost } from "../types/ArticleToPost.type.tsx";
+import { CommentToPost } from "../types/CommentToPost.tsx";
 const ArticleContext = createContext();
 
-export function ArticleContextProvider({ children }) {
+export function ArticleContextProvider({ children }: { children: React.ReactNode }) {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [cardList, setCardList] = useState([]);
 
-  const createFrenchDate = useCallback((dateToChange) => {
+  const createFrenchDate = useCallback((dateToChange: string) => {
     const date = new Date(dateToChange);
     const adjustedDate = new Intl.DateTimeFormat("fr-FR", {
       dateStyle: "full",
     }).format(date);
     return adjustedDate;
   }, []);
-  const createShortFrenchDate = useCallback((dateToChange) => {
+  const createShortFrenchDate = useCallback((dateToChange: string) => {
     const date = new Date(dateToChange);
     const adjustedDate = new Intl.DateTimeFormat("fr-FR", {
       dateStyle: "short",
@@ -40,7 +42,7 @@ export function ArticleContextProvider({ children }) {
 
   // Récupération d'un article par son id
   const fetchArticleById = useCallback(
-    async (id) => {
+    async (id: number) => {
     try {
       const response = await axios.get(
         `${backendUrl}/api/articles/${id}`
@@ -58,7 +60,7 @@ export function ArticleContextProvider({ children }) {
 
   //Like d'un article
   const likePost = useCallback(
-    async (articleId, userId) => {
+    async (articleId: number, userId: number) => {
       try {
         await axios.patch(
           `${backendUrl}/api/articles/${articleId}/add-liker`,
@@ -73,7 +75,7 @@ export function ArticleContextProvider({ children }) {
   );
   // Unlike d'un article
   const unlikePost = useCallback(
-    async (articleId, userId) => {
+    async (articleId: number, userId: number) => {
       try {
         await axios.patch(
           `${backendUrl}/api/articles/${articleId}/remove-liker`,
@@ -89,7 +91,7 @@ export function ArticleContextProvider({ children }) {
 
   //Post d'un article
   const postArticle = useCallback(
-    async (articleData) => {
+    async (articleData: ArticleToPost) => {
       try {
         await axios.post(`${backendUrl}/api/articles`, articleData, {
           withCredentials: true,
@@ -102,7 +104,7 @@ export function ArticleContextProvider({ children }) {
   );
 
   const postComment = useCallback(
-    async (articleId, commentData) => {
+    async (articleId: number, commentData: CommentToPost) => {
       try {
         await axios.patch(
           `${backendUrl}/api/articles/${articleId}/comments`,

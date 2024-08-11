@@ -19,11 +19,11 @@ export default function NewArticle() {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setArticleValue({ ...articleValue, [e.target.name]: e.target.value });
   };
 
-  const onChangePicture = (e) => {
+  const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     if (file) {
       setImagePreview(URL.createObjectURL(file));

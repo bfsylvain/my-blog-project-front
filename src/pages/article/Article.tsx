@@ -9,11 +9,13 @@ import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea.tsx";
+import { UserInfo } from "../../types/UserInfo.type.tsx";
+import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
 
 function Article() {
   const { id } = useParams();
-  const userInfo = useOutletContext();
-  const articleData = useLoaderData();
+  const userInfo: UserInfo = useOutletContext();
+  const articleData: ArticleDetail = useLoaderData();
   const { backendUrl, createFrenchDate, postComment } = UseArticle();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
@@ -27,11 +29,11 @@ function Article() {
   });
   const creationDate = createFrenchDate(articleData.createdAt);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
-  const handleComment = (e) => {
+  const handleComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (comment.text) {
       postComment(id, comment);

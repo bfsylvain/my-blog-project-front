@@ -10,9 +10,11 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import fetchTokenData from "../utils/FetchTokenData.tsx";
+import { SignInCredentials } from "../types/SignInCredentials.type.tsx";
+import { SignUpCredentials } from "../types/SignUpCredentials.type.tsx";
 const AppContext = createContext();
 
-export function AppContextProvider({ children }) {
+export function AppContextProvider({ children }: { children: React.ReactNode }) {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
@@ -51,7 +53,7 @@ export function AppContextProvider({ children }) {
 
   // connexion
   const signIn = useCallback(
-    async (credentials) => {
+    async (credentials: SignInCredentials) => {
       try {
         const response = await axios.post(
           `${backendUrl}/api/signIn`,
@@ -75,7 +77,7 @@ export function AppContextProvider({ children }) {
 
   // création de compte
   const signUp = useCallback(
-    async (credentials) => {
+    async (credentials: SignUpCredentials) => {
       try {
         const response = await axios.post(
           `${backendUrl}/api/signUp`,

@@ -3,11 +3,11 @@ import "./signIn.scss";
 export default function SignIn() {
   const { signIn, signInForm, setSignInForm, wrongId, setWrongId } = UseApp();
 
-  const handleFormValue = (e) => {
+  const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWrongId(false);
     setSignInForm({ ...signInForm, [e.target.id]: e.target.value });
   };
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signIn(signInForm);
   };

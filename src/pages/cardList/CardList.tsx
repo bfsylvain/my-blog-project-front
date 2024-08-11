@@ -3,6 +3,7 @@ import Card from "../../components/cardList/card/card/Card.tsx";
 import "./cardList.scss";
 import { useEffect } from "react";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
+import { Article } from "../../types/ArticleDetail.type.tsx";
 
 function CardList() {
   const { cardList, fetchArticles } = UseArticle();
@@ -20,7 +21,7 @@ function CardList() {
         )}
       </section>
       <section className="card-area">
-        {cardList.map((article) => (
+        {cardList.map((article: Article) => (
           <Card key={article._id} article={article} />
         ))}
       </section>

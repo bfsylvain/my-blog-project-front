@@ -15,8 +15,12 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 import { useState } from "react";
+import { UserInfo } from "../../types/UserInfo.type.tsx";
 
-export default function Navbar({ userInfo }) {
+type NavbarProps = {
+  userInfo: UserInfo
+}
+export default function Navbar({ userInfo }: NavbarProps) {
   const [openNav, setOpenNav] = useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const disconnect = async () => {

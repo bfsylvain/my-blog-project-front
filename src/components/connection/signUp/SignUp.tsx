@@ -17,15 +17,15 @@ export default function SignUp() {
     setWrongId,
   } = UseApp();
 
-  const handleFormValue = (e) => {
+  const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWrongId(false);
     setSignUpForm({ ...signUpForm, [e.target.id]: e.target.value });
   };
-  const handlePasswordVerification = (e) => {
+  const handlePasswordVerification = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordVerification(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signUp(signUpForm);
   };
