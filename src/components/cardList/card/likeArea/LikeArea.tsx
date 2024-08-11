@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { UseArticle } from "../../../../Contexts/ArticleContext";
+import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import "./likeArea.scss";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
-import emptyHeart from "../../../../assets/icons/empty-heart-icon.svg";
-import redHeart from "../../../../assets/icons/red-heart-icon.svg";
+const emptyHeart = "../../../../assets/icons/empty-heart-icon.svg";
+const redHeart = "../../../../assets/icons/red-heart-icon.svg";
 
 export default function LikeArea({ article, userInfo }) {
   const [liked, setLiked] = useState(false);

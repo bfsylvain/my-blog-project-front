@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const fetchTokenData = async (backendUrl) => {
+const fetchTokenData = async (backendUrl: string) => {
   try {
     const response = await axios.get(`${backendUrl}/jwtid`, {
       withCredentials: true,

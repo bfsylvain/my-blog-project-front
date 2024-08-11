@@ -1,18 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import App from "./App.js";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import CardList from "./pages/cardList/CardList.jsx";
-import Article from "./pages/article/Article.jsx";
-import NewArticle from "./pages/newArticle/NewArticle.jsx";
-import Connection from "./pages/connection/Connection.jsx";
-import { AppContextProvider } from "./Contexts/AppContext.jsx";
-import { ArticleContextProvider } from "./Contexts/ArticleContext.jsx";
-import ErrorPage from "./pages/error/ErrorPage.jsx";
-import ProtectedRoute from "./components/routeProtection/ProtectedRoute.jsx";
-import articleLoader from "./loaders/article.loader.jsx";
-import HomePage from "./pages/homePage/HomePage.jsx";
+import CardList from "./pages/cardList/CardList.tsx";
+import Article from "./pages/article/Article.tsx";
+import NewArticle from "./pages/newArticle/NewArticle.tsx";
+import Connection from "./pages/connection/Connection.tsx";
+import { AppContextProvider } from "./Contexts/AppContext.tsx";
+import { ArticleContextProvider } from "./Contexts/ArticleContext.tsx";
+import ErrorPage from "./pages/error/ErrorPage.tsx";
+import ProtectedRoute from "./components/routeProtection/ProtectedRoute.tsx";
+import articleLoader from "./loaders/article.loader.tsx";
+import HomePage from "./pages/homePage/HomePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

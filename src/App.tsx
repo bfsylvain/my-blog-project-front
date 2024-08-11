@@ -1,9 +1,9 @@
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
-import Navbar from "./components/mainPage/navbar";
+import Navbar from "./components/mainPage/navbar.tsx";
 import { Outlet } from "react-router-dom";
-import { UseApp } from "./Contexts/AppContext";
+import { UseApp } from "./Contexts/AppContext.tsx";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 

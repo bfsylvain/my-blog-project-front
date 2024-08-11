@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SignIn from "../signIn/SignIn";
-import SignUp from "../signUp/SignUp";
-import { UseApp } from "../../../Contexts/AppContext";
+import SignIn from "../signIn/SignIn.tsx";
+import SignUp from "../signUp/SignUp.tsx";
+import { UseApp } from "../../../Contexts/AppContext.tsx";
 import "./log.scss";
 
 export default function Log() {

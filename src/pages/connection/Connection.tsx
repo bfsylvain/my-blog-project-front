@@ -1,4 +1,4 @@
-import Log from "../../components/connection/log/Log";
+import Log from "../../components/connection/log/Log.tsx";
 import "./connection.scss";
 
 export default function Connection() {

@@ -6,9 +6,9 @@ import {
 } from "mdb-react-ui-kit";
 import "./article.scss";
 import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
-import { UseArticle } from "../../Contexts/ArticleContext";
+import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useState } from "react";
-import CommentArea from "../../components/article/CommentArea";
+import CommentArea from "../../components/article/CommentArea.tsx";
 
 function Article() {
   const { id } = useParams();

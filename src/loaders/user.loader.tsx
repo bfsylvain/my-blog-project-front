@@ -1,4 +1,4 @@
-import fetchTokenData from "../utils/FetchTokenData";
+import fetchTokenData from "../utils/FetchTokenData.tsx";
 const userLoader = async () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   try {

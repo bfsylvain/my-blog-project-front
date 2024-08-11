@@ -1,5 +1,5 @@
 import "./presentationSection.scss";
-import VerticalForest from "../../../assets/images/vertical-forest.jpg";
+const VerticalForest = "../../../assets/images/vertical-forest.jpg";
 
 export default function PresentationSection() {
   return (

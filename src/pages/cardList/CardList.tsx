@@ -1,8 +1,8 @@
 import { Link, useOutletContext } from "react-router-dom";
-import Card from "../../components/cardList/card/card/Card";
+import Card from "../../components/cardList/card/card/Card.tsx";
 import "./cardList.scss";
 import { useEffect } from "react";
-import { UseArticle } from "../../Contexts/ArticleContext";
+import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 
 function CardList() {
   const { cardList, fetchArticles } = UseArticle();

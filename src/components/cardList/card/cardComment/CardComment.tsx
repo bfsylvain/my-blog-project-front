@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import "./cardComment.scss";
-import { UseArticle } from "../../../../Contexts/ArticleContext";
+import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 
 export default function CardComment({comment}) {
   const {createShortFrenchDate, backendUrl} = UseArticle();

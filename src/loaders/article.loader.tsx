@@ -1,4 +1,4 @@
-import fetchArticleData from "../utils/articles/FetchArticleData";
+import fetchArticleData from "../utils/articles/FetchArticleData.tsx";
 
 const articleLoader = async ({params}) => {
    const article = await fetchArticleData({params})

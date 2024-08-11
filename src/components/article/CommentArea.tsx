@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import CardComment from "../cardList/card/cardComment/CardComment";
+import CardComment from "../cardList/card/cardComment/CardComment.tsx";
 import { useEffect, useState } from "react";
 
 export default function CommentArea({ articleComments }) {

@@ -1,4 +1,4 @@
-import { UseApp } from "../../../Contexts/AppContext";
+import { UseApp } from "../../../Contexts/AppContext.tsx";
 import "./signIn.scss";
 export default function SignIn() {
   const { signIn, signInForm, setSignInForm, wrongId, setWrongId } = UseApp();

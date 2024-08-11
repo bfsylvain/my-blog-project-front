@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import fetchTokenData from "../utils/FetchTokenData";
+import fetchTokenData from "../utils/FetchTokenData.tsx";
 const AppContext = createContext();
 
 export function AppContextProvider({ children }) {

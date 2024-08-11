@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./card.scss";
-import { UseArticle } from "../../../../Contexts/ArticleContext";
-import { UseApp } from "../../../../Contexts/AppContext";
-import LikeArea from "../likeArea/LikeArea";
+import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
+import { UseApp } from "../../../../Contexts/AppContext.tsx";
+import LikeArea from "../likeArea/LikeArea.tsx";
 
 export default function Card({ article }) {
   const { userInfo } = UseApp();

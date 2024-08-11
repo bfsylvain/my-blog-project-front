@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./newArticle.scss";
-import { UseApp } from "../../Contexts/AppContext";
-import { UseArticle } from "../../Contexts/ArticleContext";
+import { UseApp } from "../../Contexts/AppContext.tsx";
+import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useNavigate } from "react-router-dom";
-import AddIcon from "../../assets/icons/add-round-icon.svg";
+const AddIcon = "../../assets/icons/add-round-icon.svg";
+
 export default function NewArticle() {
   const { userInfo } = UseApp();
   const { postArticle } = UseArticle();

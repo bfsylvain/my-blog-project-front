@@ -1,6 +1,6 @@
 // import axios from "axios";
-import { UseApp } from "../../../Contexts/AppContext";
-import SignIn from "../signIn/SignIn";
+import { UseApp } from "../../../Contexts/AppContext.tsx";
+import SignIn from "../signIn/SignIn.tsx";
 import "./signUp.scss";
 
 export default function SignUp() {
