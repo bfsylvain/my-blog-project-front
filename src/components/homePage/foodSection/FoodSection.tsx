@@ -1,5 +1,5 @@
 import "./foodSection.scss";
-const VerticalCocktail = "../../../assets/images/vertical-cocktail.avif"
+const VerticalCocktail = "./images/vertical-cocktail.avif"
 export default function FoodSection() {
   return (
     <div className="presentation-sections">

@@ -4,8 +4,8 @@ import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import "./likeArea.scss";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
-const emptyHeart = "../../../../assets/icons/empty-heart-icon.svg";
-const redHeart = "../../../../assets/icons/red-heart-icon.svg";
+const emptyHeart = "./icons/empty-heart-icon.svg";
+const redHeart = "./icons/red-heart-icon.svg";
 
 export default function LikeArea({ article, userInfo }) {
   const [liked, setLiked] = useState(false);

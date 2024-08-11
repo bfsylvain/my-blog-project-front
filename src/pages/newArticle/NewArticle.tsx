@@ -3,7 +3,7 @@ import "./newArticle.scss";
 import { UseApp } from "../../Contexts/AppContext.tsx";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useNavigate } from "react-router-dom";
-const AddIcon = "../../assets/icons/add-round-icon.svg";
+const AddIcon = "./icons/add-round-icon.svg";
 
 export default function NewArticle() {
   const { userInfo } = UseApp();
