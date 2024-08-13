@@ -14,18 +14,23 @@ import ProtectedRoute from "./components/routeProtection/ProtectedRoute.tsx";
 import articleLoader from "./loaders/article.loader.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 
+import { Provider } from "react-redux";
+import  store  from "./store/store.ts";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AppContextProvider>
-        <App />
-      </AppContextProvider>
+      <Provider store={store}>
+        {/* <AppContextProvider> */}
+          <App />
+        {/* </AppContextProvider> */}
+      </Provider>
     ),
     children: [
       {
         path: "/",
-        element: <HomePage/>
+        element: <HomePage />,
       },
       {
         path: "/articles",
@@ -37,19 +42,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/article/:id",
-        errorElement: <ErrorPage/>,
+        errorElement: <ErrorPage />,
         loader: articleLoader,
         element: (
           <ArticleContextProvider>
             <Article />
           </ArticleContextProvider>
-        )
+        ),
       },
       {
         path: "/new-article",
         element: (
           <ArticleContextProvider>
-            <ProtectedRoute element={<NewArticle />}/>
+            <ProtectedRoute element={<NewArticle />} />
           </ArticleContextProvider>
         ),
       },

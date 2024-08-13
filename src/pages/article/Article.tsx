@@ -16,6 +16,7 @@ function Article() {
   const { id } = useParams();
   const userInfo: UserInfo = useOutletContext();
   const articleData: ArticleDetail = useLoaderData();
+  // @ts-ignore
   const { backendUrl, createFrenchDate, postComment } = UseArticle();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),

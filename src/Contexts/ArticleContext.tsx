@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { ArticleToPost } from "../types/ArticleToPost.type.tsx";
 import { CommentToPost } from "../types/CommentToPost.tsx";
+// @ts-ignore
 const ArticleContext = createContext();
 
 export function ArticleContextProvider({ children }: { children: React.ReactNode }) {
