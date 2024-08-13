@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 import fetchTokenData from "../utils/FetchTokenData.tsx";
 import { SignInCredentials } from "../types/SignInCredentials.type.tsx";
 import { SignUpCredentials } from "../types/SignUpCredentials.type.tsx";
-const AppContext = createContext();
+const AppContext = createContext([() => {}]);
 
 export function AppContextProvider({ children }: { children: React.ReactNode }) {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
 
