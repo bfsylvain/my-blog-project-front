@@ -15,16 +15,16 @@ import articleLoader from "./loaders/article.loader.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 
 import { Provider } from "react-redux";
-import  store  from "./store/store.ts";
+import  store  from "./app/store.ts";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Provider store={store}>
-        {/* <AppContextProvider> */}
+        <AppContextProvider>
           <App />
-        {/* </AppContextProvider> */}
+        </AppContextProvider>
       </Provider>
     ),
     children: [
