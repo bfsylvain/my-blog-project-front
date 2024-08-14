@@ -16,6 +16,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { useState } from "react";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { logout } from "../../app/auth/authSlice.ts";
 
 type NavbarProps = {
   userInfo: UserInfo
@@ -23,6 +25,11 @@ type NavbarProps = {
 export default function Navbar({ userInfo }: NavbarProps) {
   const [openNav, setOpenNav] = useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const dispatch = useAppDispatch();
+
+  const userConnectedRedux = useAppSelector((state) => state.authentification);
+
   const disconnect = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/logOut`);
@@ -63,6 +70,9 @@ export default function Navbar({ userInfo }: NavbarProps) {
               </MDBNavbarItem>
               <MDBNavbarItem>
                 {userInfo ? <MDBNavbarLink onClick={disconnect}>Déconnexion</MDBNavbarLink>: <MDBNavbarLink href="/connexion">Connexion</MDBNavbarLink>}
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+              {userConnectedRedux.id ? <MDBNavbarLink onClick={dispatch(logout())}>ReduxDisconnect</MDBNavbarLink>: <MDBNavbarLink href="/connexion">ReduxConnect</MDBNavbarLink>}
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>

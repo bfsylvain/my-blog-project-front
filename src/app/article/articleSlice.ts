@@ -20,26 +20,37 @@ const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
 //     userPseudo: string,
 // };
 
-const initialState : ArticleDetail[] = []
 
-const articleSlice = createSlice({
-    name: "articles",
-    initialState,
-    reducers:{},
-    extraReducers: builder => {
-        builder
-        .addCase(getAllArticlesAsync.fulfilled, (state, action) => {
-            return action.payload
-        })
-    }
-});
+//Interface pour inclure une valeur d'état et mettre un spinner si status = loading
+interface ArticleState {
+  value: ArticleDetail[];
+  status: "idle" | "loading" | "failed";
+}
+// initaialState pour inclure une valeur d'état et mettre un spinner si status = loading
+// const initialState: ArticleState = {
+//   value: [],
+//   status: "idle",
+// };
+const initialState: ArticleDetail[] = [];
 
 export const getAllArticlesAsync = createAsyncThunk(
-    'articles/fetchAllArticles',
-    async () => {
-          const response = await axios.get(`${backendUrl}/api/articles`);
-            return response.data
-        }
-)
+  "articles/fetchAllArticles",
+  async () => {
+    const response = await axios.get(`${backendUrl}/api/articles`);
+    return response.data;
+  }
+);
+
+const articleSlice = createSlice({
+  name: "articles",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAllArticlesAsync.fulfilled, (state, action) => {
+    //   state.status = "idle";
+      return action.payload;
+    });
+  },
+});
 
 export default articleSlice.reducer;
