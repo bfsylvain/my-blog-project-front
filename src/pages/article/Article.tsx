@@ -5,22 +5,28 @@ import {
   MDBCarouselItem,
 } from "mdb-react-ui-kit";
 import "./article.scss";
-import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea.tsx";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
+import { useAppSelector } from "../../app/hooks.ts";
+import { useGetPostByIdQuery } from "../../app/features/api/apiSlice.ts";
 
 function Article() {
   const { id } = useParams();
   const userInfo: UserInfo = useOutletContext();
-  const articleData: ArticleDetail = useLoaderData();
+  const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
+
+  const articleRedux = useAppSelector(state => 
+    state.articles.find(article => article._id ===id)
+  )
+  const {data, error, isLoading} = useGetPostByIdQuery(id as string);
   // @ts-ignore
-  const { backendUrl, createFrenchDate, postComment } = UseArticle();
+  const { createFrenchDate, postComment } = UseArticle();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
-  url(${backendUrl}/public${articleData.pictures[0]})
+  url(${backendUrl}/public${articleRedux?.pictures[0]})
   `;
 
   const [comment, setComment] = useState({
@@ -28,9 +34,9 @@ function Article() {
     userPseudo: userInfo?.pseudo,
     text: "",
   });
-  const creationDate = createFrenchDate(articleData.createdAt);
+  const creationDate = data?.createdAt ? createFrenchDate(data.createdAt) : "Date non disponible";
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
@@ -45,6 +51,28 @@ function Article() {
       });
     }
   };
+  if(isLoading) {
+    return (
+      <section>
+        <h2>hold on...</h2>
+      </section>
+    )
+  }
+  if(error) {
+    return(
+      <section>
+        <h2>error</h2>
+      </section>
+    )
+  }
+  if(!data) {
+    return (
+      <section>
+        <h2>error;
+        </h2>
+      </section>
+    )
+  }
   return (
     <>
       <article className="blog-article">
@@ -52,18 +80,18 @@ function Article() {
           className="article-header"
           style={{ backgroundImage: headerBackgroudImage }}
         >
-          <h1>{articleData.title}</h1>
+          <h1>{data.title}</h1>
           <p>{`Le ${creationDate}`}</p>
         </header>
         <section className="article-text-area">
-          <p className="article-text">{articleData.text}</p>
+          <p className="article-text">{data.text}</p>
         </section>
         <section className="carousel-area">
           <section className="carousel">
             <MDBCarousel showControls>
               <MDBCarouselItem itemId={1}>
                 <img
-                  src={`${backendUrl}/public${articleData.pictures[0]}`}
+                  src={`${backendUrl}/public${data.pictures[0]}`}
                   className="d-block w-100"
                   alt="..."
                 />
@@ -92,15 +120,14 @@ function Article() {
               headerTitle="Commentaires de visiteurs"
             >
               <CommentArea
-                articleComments={articleData.comments}
-                userInfo={userInfo}
+                articleComments={data.comments}
               />
             </MDBAccordionItem>
           </MDBAccordion>
         </section>
+        <form onSubmit={handleComment}>
         <section className="comments-area">
           <textarea
-            type="text"
             rows={5}
             name="text"
             id=""
@@ -111,12 +138,13 @@ function Article() {
           <button
             className="send-comment-btn"
             type="submit"
-            onClick={handleComment}
           >
             envoyer
           </button>
         </section>
+        </form>
       </article>
+
     </>
   );
 }

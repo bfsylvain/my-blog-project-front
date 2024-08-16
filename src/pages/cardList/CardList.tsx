@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { decrement, increment, incrementByAmount } from "../../app/features/counter/counterSlice.ts";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { getAllArticlesAsync } from "../../app/features/article/articleSlice.ts";
+import { useGetPostsQuery } from "../../app/features/api/apiSlice.ts";
 
 function CardList() {
   // @ts-ignore
@@ -16,7 +17,9 @@ function CardList() {
   const userInfo: UserInfo = useOutletContext();
   
   const cardListRedux = useAppSelector((state) => state.articles);
-  
+  const {data, error, isLoading} = useGetPostsQuery();
+
+  const CardListRTK = data;
   const count = useAppSelector((state) => state.counter.value);
   const [incrementAmount, setIncrementAmount] = useState("2")
 
