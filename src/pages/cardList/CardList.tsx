@@ -6,9 +6,9 @@ import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { decrement, increment, incrementByAmount } from "../../app/counter/counterSlice.ts";
+import { decrement, increment, incrementByAmount } from "../../app/features/counter/counterSlice.ts";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { getAllArticlesAsync } from "../../app/article/articleSlice.ts";
+import { getAllArticlesAsync } from "../../app/features/article/articleSlice.ts";
 
 function CardList() {
   // @ts-ignore

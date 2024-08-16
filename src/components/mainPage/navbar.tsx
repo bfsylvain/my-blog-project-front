@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { logout } from "../../app/auth/authSlice.ts";
+import { logout } from "../../app/features/auth/authSlice.ts";
 
 type NavbarProps = {
   userInfo: UserInfo
@@ -72,7 +72,7 @@ export default function Navbar({ userInfo }: NavbarProps) {
                 {userInfo ? <MDBNavbarLink onClick={disconnect}>Déconnexion</MDBNavbarLink>: <MDBNavbarLink href="/connexion">Connexion</MDBNavbarLink>}
               </MDBNavbarItem>
               <MDBNavbarItem>
-              {userConnectedRedux.id ? <MDBNavbarLink onClick={dispatch(logout())}>ReduxDisconnect</MDBNavbarLink>: <MDBNavbarLink href="/connexion">ReduxConnect</MDBNavbarLink>}
+              {userConnectedRedux.id ? <MDBNavbarLink onClick={() => dispatch(logout())}>ReduxDisconnect</MDBNavbarLink>: <MDBNavbarLink href="/connexion">ReduxConnect</MDBNavbarLink>}
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>

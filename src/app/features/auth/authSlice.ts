@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "axios";
-import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { SignInCredentials } from "../../types/SignInCredentials.type.tsx";
+import { UserInfo } from "../../../types/UserInfo.type.tsx";
+import { SignInCredentials } from "../../../types/SignInCredentials.type.tsx";
 
 const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { UserComment } from "../../types/UserComment.type.tsx";
-import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
+import { ArticleDetail } from "../../../types/ArticleDetail.type.tsx";
 import axios from "axios";
 
 const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
