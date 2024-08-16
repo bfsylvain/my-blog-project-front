@@ -3,11 +3,14 @@ import "./newArticle.scss";
 import { UseApp } from "../../Contexts/AppContext.tsx";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useNavigate } from "react-router-dom";
+import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
+import { useCreateNewArticleMutation } from "../../app/features/api/articleApi.ts";
+import { ArticleToPost } from "../../types/ArticleToPost.type.tsx";
 const AddIcon = "./icons/add-round-icon.svg";
 
 export default function NewArticle() {
   const { userInfo } = UseApp();
-  const { postArticle } = UseArticle();
+  const [createNewArticle] = useCreateNewArticleMutation();
   const navigate = useNavigate();
 
   const [articleValue, setArticleValue] = useState({
@@ -17,45 +20,48 @@ export default function NewArticle() {
     text: "",
   });
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setArticleValue({ ...articleValue, [e.target.name]: e.target.value });
   };
 
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
       setImagePreview(URL.createObjectURL(file));
       setSelectedImage(file);
     }
   };
 
-  const createArticle = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("userId", articleValue.userId);
-    formData.append("userPseudo", articleValue.userPseudo);
-    formData.append("title", articleValue.title);
-    formData.append("text", articleValue.text);
-    if (selectedImage) {
-      formData.append("file", selectedImage);
+    try {
+      const formData = new FormData();
+      formData.append("userId", articleValue.userId);
+      formData.append("userPseudo", articleValue.userPseudo);
+      formData.append("title", articleValue.title);
+      formData.append("text", articleValue.text);
+      if (selectedImage) {
+        formData.append("file", selectedImage);
+      }
+      await createNewArticle(formData).unwrap();
+      navigate("/articles");
+    } catch(error) {
+      console.error("failed to create article: ", error)
     }
-
-    await postArticle(formData);
-    navigate("/articles");
-  };
+  }
 
   return (
     <div className="new-article">
       <h1>NOUVEL ARTICLE</h1>
-      <form onSubmit={createArticle} className="article-form">
+      <form onSubmit={handleSubmit} className="article-form">
         <fieldset className="field">
           <label htmlFor="title" className="area-title">
             Titre
           </label>
           <textarea
-            label="Votre texte"
             name="title"
             id="title"
             value={articleValue.title}
@@ -68,7 +74,6 @@ export default function NewArticle() {
             Votre texte
           </label>
           <textarea
-            label="Votre texte"
             name="text"
             id=""
             value={articleValue.text}

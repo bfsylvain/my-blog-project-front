@@ -9,21 +9,20 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { decrement, increment, incrementByAmount } from "../../app/features/counter/counterSlice.ts";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { getAllArticlesAsync } from "../../app/features/article/articleSlice.ts";
-import { useGetPostsQuery } from "../../app/features/api/apiSlice.ts";
+import { useGetArticlesQuery } from "../../app/features/api/articleApi.ts";
 
 function CardList() {
   // @ts-ignore
-  const { cardList, fetchArticles } = UseArticle();
+  const { fetchArticles } = UseArticle();
   const userInfo: UserInfo = useOutletContext();
   
-  const cardListRedux = useAppSelector((state) => state.articles);
-  const {data, error, isLoading} = useGetPostsQuery();
-
-  const CardListRTK = data;
-  const count = useAppSelector((state) => state.counter.value);
-  const [incrementAmount, setIncrementAmount] = useState("2")
-
-  const incrementValue = Number(incrementAmount) || 0
+  const {data: articleListRTK, error, isLoading} = useGetArticlesQuery();
+  
+  // const cardListRedux = useAppSelector((state) => state.articles);
+  
+  // const count = useAppSelector((state) => state.counter.value);
+  // const [incrementAmount, setIncrementAmount] = useState("2")
+  // const incrementValue = Number(incrementAmount) || 0
 
 
   const dispatch = useAppDispatch();
@@ -41,17 +40,18 @@ function CardList() {
           </Link>
         )}
       </section>
-      <section className="card-area">
-        {cardList.map((article: ArticleDetail) => (
-          <Card key={article._id} article={article} />
-        ))}
-      </section>
-      <section className="card-area">
-        {cardListRedux.map((article: ArticleDetail) => (
+      {error ? (
+        <>An error occured...</>
+      ): isLoading ? (
+        <>Loading....</>
+      ): articleListRTK ? (
+        <section className="card-area">
+        {articleListRTK.map((article: ArticleDetail) => (
           <Card key={article._id} article={article}></Card>
         ))}
       </section>
-      <div>
+      ): null}
+      {/* <div>
         <button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -82,7 +82,7 @@ function CardList() {
           Add Amount
         </button>
       </div>
-      </div>
+      </div> */}
     </section>
   );
 }

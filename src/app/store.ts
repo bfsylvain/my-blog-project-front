@@ -1,6 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
-import { apiSlice } from "./features/api/apiSlice.ts";
+import { articleApi } from "./features/api/articleApi.ts";
 import articleReducer from "./features/article/articleSlice.ts";
 import counterReducer from "./features/counter/counterSlice.ts";
 import authReducer from "./features/auth/authSlice.ts";
@@ -10,11 +10,11 @@ const store = configureStore({
     articles: articleReducer,
     counter: counterReducer,
     authentification: authReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    [articleApi.reducerPath]: articleApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(apiSlice.middleware),
+      .concat(articleApi.middleware),
 });
 export default store;
 

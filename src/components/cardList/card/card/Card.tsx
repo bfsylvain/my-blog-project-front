@@ -5,15 +5,30 @@ import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import { UseApp } from "../../../../Contexts/AppContext.tsx";
 import LikeArea from "../likeArea/LikeArea.tsx";
 import { ArticleDetail } from "../../../../types/ArticleDetail.type.tsx";
+import { useDeleteArticleMutation } from "../../../../app/features/api/articleApi.ts";
 
 type CardProps = {
   article: ArticleDetail;
 };
 
+const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
+
 export default function Card({ article }: CardProps) {
+  // @ts-ignore
   const { userInfo } = UseApp();
-  const { backendUrl, createShortFrenchDate } = UseArticle();
+  // @ts-ignore
+  const { createShortFrenchDate } = UseArticle();
   const creationDate = article ? createShortFrenchDate(article.updatedAt) : "";
+
+  const [deleteArticle] = useDeleteArticleMutation();
+
+  const handleDelete = async () => {
+    try {
+      await deleteArticle(article._id).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -46,6 +61,7 @@ export default function Card({ article }: CardProps) {
           </div>
           <p className="content-preview">{article.text}</p>
           <LikeArea article={article} userInfo={userInfo} />
+          <button onClick={handleDelete}>X</button>
         </div>
       </article>
     </>

@@ -6,6 +6,7 @@ import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
 import { ArticleDetail } from "../../../../types/ArticleDetail.type.tsx";
 import { UserInfo } from "../../../../types/UserInfo.type.tsx";
+import { useLikeArticleMutation, useUnlikeArticleMutation } from "../../../../app/features/api/articleApi.ts";
 const emptyHeart = "./icons/empty-heart-icon.svg";
 const redHeart = "./icons/red-heart-icon.svg";
 
@@ -15,21 +16,32 @@ type LikeAreaProps = {
 };
 
 export default function LikeArea({ article, userInfo }: LikeAreaProps) {
-  const [liked, setLiked] = useState(false);
-  const { likePost, unlikePost } = UseArticle();
+  const [likeArticle] = useLikeArticleMutation();
+  const [unlikeArticle] = useUnlikeArticleMutation();
+  const likedArticle = article.likers.includes(userInfo.id)
 
-  useEffect(() => {
-    if (userInfo && article.likers.includes(userInfo.id)) setLiked(true);
-  }, [article.likers, userInfo]);
+  const handleLike = async () => {
+    try {
+      await likeArticle({
+        articleId: article._id,
+        userId: userInfo.id,
+      }).unwrap();
+    } catch (error) {
+      console.error("Failed to like article", error);
+    }
+  };
 
-  const like = () => {
-    likePost(article._id, userInfo.id);
-    setLiked(true);
-  };
-  const unlike = () => {
-    unlikePost(article._id, userInfo.id);
-    setLiked(false);
-  };
+  const handleUnlike = async () => {
+    try {
+      await unlikeArticle({
+        articleId: article._id,
+        userId: userInfo.id,
+      }).unwrap();
+    } catch (error) {
+      console.error("Failed to unlike article", error);
+    }
+
+  }
 
   return (
     <section className="action-area">
@@ -42,11 +54,11 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
           <div>connectez vous pour liker un post !</div>
         </Popup>
       )}
-      {userInfo && !liked && (
-        <img className="like-img" src={emptyHeart} alt="like" onClick={like} />
+      {userInfo && !likedArticle && (
+        <img className="like-img" src={emptyHeart} alt="like" onClick={handleLike} />
       )}
-      {userInfo && liked && (
-        <img className="like-img" src={redHeart} alt="like" onClick={unlike} />
+      {userInfo && likedArticle && (
+        <img className="like-img" src={redHeart} alt="like" onClick={handleUnlike} />
       )}
     </section>
   );

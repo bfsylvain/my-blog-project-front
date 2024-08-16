@@ -1,5 +1,5 @@
 export type CommentToPost = {
-    userId: number,
+    userId: string,
     userPseudo: string,
     text: string
 }
