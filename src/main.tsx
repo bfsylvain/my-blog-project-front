@@ -13,16 +13,19 @@ import ProtectedRoute from "./components/routeProtection/ProtectedRoute.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 
 import { Provider } from "react-redux";
-import  store  from "./app/store.ts";
+import  store, { persistor }  from "./app/store.ts";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <AppContextProvider>
           <App />
         </AppContextProvider>
+        </PersistGate>
       </Provider>
     ),
     children: [

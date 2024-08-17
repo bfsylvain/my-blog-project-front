@@ -33,24 +33,12 @@ interface ArticleState {
 // };
 const initialState: ArticleDetail[] = [];
 
-export const getAllArticlesAsync = createAsyncThunk(
-  "articles/fetchAllArticles",
-  async () => {
-    const response = await axios.get(`${BASE_URL}/api/articles`);
-    return response.data;
-  }
-);
 
 const articleSlice = createSlice({
   name: "articles",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getAllArticlesAsync.fulfilled, (state, action) => {
-    //   state.status = "idle";
-      return action.payload;
-    });
-  },
+
 });
 
 export default articleSlice.reducer;

@@ -9,5 +9,5 @@ export const rootApi = createApi({
         credentials: 'include'
     }),
     endpoints: () => ({}),
-    tagTypes: ['Article']
+    tagTypes: ['Article', 'Auth']
 })

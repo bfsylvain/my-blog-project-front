@@ -1,36 +1,33 @@
 import { Link, useOutletContext } from "react-router-dom";
 import Card from "../../components/cardList/card/card/Card.tsx";
 import "./cardList.scss";
-import { ReactNode, useEffect, useState } from "react";
-import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
+import { UserInfo } from "../../types/UserInfo.type.tsx";
+
+import { useGetArticlesQuery } from "../../app/features/api/articleApi.ts";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { decrement, increment, incrementByAmount } from "../../app/features/counter/counterSlice.ts";
-import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { getAllArticlesAsync } from "../../app/features/article/articleSlice.ts";
-import { useGetArticlesQuery } from "../../app/features/api/articleApi.ts";
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+  reset,
+} from "../../app/features/counter/counterSlice.ts";
+import { useState } from "react";
 
 function CardList() {
   // @ts-ignore
-  const { fetchArticles } = UseArticle();
   const userInfo: UserInfo = useOutletContext();
-  
-  const {data: articleListRTK, error, isLoading} = useGetArticlesQuery();
-  
-  // const cardListRedux = useAppSelector((state) => state.articles);
-  
-  // const count = useAppSelector((state) => state.counter.value);
-  // const [incrementAmount, setIncrementAmount] = useState("2")
-  // const incrementValue = Number(incrementAmount) || 0
 
-
+  const { data: articleListRTK, error, isLoading } = useGetArticlesQuery();
+  
+  const [incrementAmount, setIncrementAmount] = useState("2");
+  const incrementValue = Number(incrementAmount) || 0;
+  
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    fetchArticles();
-    dispatch(getAllArticlesAsync())
-  }, [fetchArticles]);
+  const count = useAppSelector((state) => state.counter.value);
+
   return (
     <section className="card-page">
       <section className="add-article">
@@ -42,16 +39,17 @@ function CardList() {
       </section>
       {error ? (
         <>An error occured...</>
-      ): isLoading ? (
+      ) : isLoading ? (
         <>Loading....</>
-      ): articleListRTK ? (
+      ) : articleListRTK ? (
         <section className="card-area">
-        {articleListRTK.map((article: ArticleDetail) => (
-          <Card key={article._id} article={article}></Card>
-        ))}
-      </section>
-      ): null}
-      {/* <div>
+          {articleListRTK.map((article: ArticleDetail) => (
+            <Card key={article._id} article={article}></Card>
+          ))}
+        </section>
+      ) : null}
+
+      <div>
         <button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -66,23 +64,24 @@ function CardList() {
           Decrement
         </button>
         <div>
-        <input
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          type="number"
-          onChange={e => {
-            setIncrementAmount(e.target.value)
-          }}
-        />
-        <button
-          onClick={() => {
-            dispatch(incrementByAmount(incrementValue))
-          }}
-        >
-          Add Amount
-        </button>
+          <input
+            aria-label="Set increment amount"
+            value={incrementAmount}
+            type="number"
+            onChange={(e) => {
+              setIncrementAmount(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              dispatch(incrementByAmount(incrementValue));
+            }}
+          >
+            Add Amount
+          </button>
+        </div>
+        <button onClick={() => dispatch(reset())}>Reset</button>
       </div>
-      </div> */}
     </section>
   );
 }

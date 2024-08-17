@@ -28,7 +28,7 @@ export default function Navbar({ userInfo }: NavbarProps) {
 
   const dispatch = useAppDispatch();
 
-  const userConnectedRedux = useAppSelector((state) => state.authentification);
+  const userConnectedRedux = useAppSelector((state) => state.auth);
 
   const disconnect = async () => {
     try {
