@@ -9,20 +9,18 @@ import { useOutletContext, useParams } from "react-router-dom";
 import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea.tsx";
+import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { useAppSelector } from "../../app/hooks.ts";
 import { useCommentArticleMutation, useGetArticleByIdQuery } from "../../app/features/api/articleApi.ts";
-import { CommentToPost } from "../../types/CommentToPost.tsx";
 
 function Article() {
   const { id } = useParams();
   const userInfo: UserInfo = useOutletContext();
   const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
-
   const { data: article, error, isLoading } = useGetArticleByIdQuery(id as string);
   const [commentArticle] = useCommentArticleMutation();
   // @ts-ignore
-  const { createFrenchDate, postComment } = UseArticle();
+  const { createFrenchDate } = UseArticle();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
   url(${backendUrl}/public${article?.pictures[0]})
@@ -40,18 +38,6 @@ function Article() {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
-
-  // const handleComment = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (comment.text) {
-  //     postComment(id, comment);
-  //     setComment({
-  //       userId: userInfo?.id,
-  //       userPseudo: userInfo?.pseudo,
-  //       text: "",
-  //     });
-  //   }
-  // };
 
   const handleCommentRTK = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +60,7 @@ function Article() {
       {error ? (
         <>An error occured...</>
       ) : isLoading ? (
-        <>Loading...</>
+        <Loader/>     
       ) : article ? (
         <article className="blog-article">
           <header

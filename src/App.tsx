@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar from "./components/mainPage/navbar.tsx";
 import { Outlet } from "react-router-dom";
 import { UseApp } from "./Contexts/AppContext.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 function App() {

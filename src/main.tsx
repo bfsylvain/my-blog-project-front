@@ -9,9 +9,7 @@ import NewArticle from "./pages/newArticle/NewArticle.tsx";
 import Connection from "./pages/connection/Connection.tsx";
 import { AppContextProvider } from "./Contexts/AppContext.tsx";
 import { ArticleContextProvider } from "./Contexts/ArticleContext.tsx";
-import ErrorPage from "./pages/error/ErrorPage.tsx";
 import ProtectedRoute from "./components/routeProtection/ProtectedRoute.tsx";
-import articleLoader from "./loaders/article.loader.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 
 import { Provider } from "react-redux";
@@ -42,8 +40,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/article/:id",
-        errorElement: <ErrorPage />,
-        loader: articleLoader,
         element: (
           <ArticleContextProvider>
             <Article />
