@@ -13,7 +13,7 @@ import { CommentToPost } from "../types/CommentToPost.tsx";
 const ArticleContext = createContext();
 
 export function ArticleContextProvider({ children }: { children: React.ReactNode }) {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [cardList, setCardList] = useState([]);
 
   const createFrenchDate = useCallback((dateToChange: string) => {
@@ -34,19 +34,19 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
   //Récupère tous les articles
   const fetchArticles = useCallback(async () => {
     try {
-      const result = await axios.get(`${backendUrl}/api/articles`);
+      const result = await axios.get(`${BASE_URL}/api/articles`);
       setCardList(result.data);
     } catch (err) {
       console.error("error fetching data");
     }
-  }, [backendUrl]);
+  }, [BASE_URL]);
 
   // Récupération d'un article par son id
   const fetchArticleById = useCallback(
     async (id: number) => {
     try {
       const response = await axios.get(
-        `${backendUrl}/api/articles/${id}`
+        `${BASE_URL}/api/articles/${id}`
       );
       if (response) {
         return response.data
@@ -57,14 +57,14 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
       console.error(err);
       return null;
     }
-  }, [backendUrl]);
+  }, [BASE_URL]);
 
   //Like d'un article
   const likePost = useCallback(
     async (articleId: number, userId: number) => {
       try {
         await axios.patch(
-          `${backendUrl}/api/articles/${articleId}/add-liker`,
+          `${BASE_URL}/api/articles/${articleId}/add-liker`,
           { userId: userId },
           { withCredentials: true }
         );
@@ -72,14 +72,14 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
         console.error("error fetching data");
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
   // Unlike d'un article
   const unlikePost = useCallback(
     async (articleId: number, userId: number) => {
       try {
         await axios.patch(
-          `${backendUrl}/api/articles/${articleId}/remove-liker`,
+          `${BASE_URL}/api/articles/${articleId}/remove-liker`,
           { userId: userId },
           { withCredentials: true }
         );
@@ -87,28 +87,28 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
         console.error("error fetching data");
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
 
   //Post d'un article
   const postArticle = useCallback(
     async (articleData: ArticleToPost) => {
       try {
-        await axios.post(`${backendUrl}/api/articles`, articleData, {
+        await axios.post(`${BASE_URL}/api/articles`, articleData, {
           withCredentials: true,
         });
       } catch (err) {
         console.error(err);
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
 
   const postComment = useCallback(
     async (articleId: number, commentData: CommentToPost) => {
       try {
         await axios.patch(
-          `${backendUrl}/api/articles/${articleId}/comments`,
+          `${BASE_URL}/api/articles/${articleId}/comments`,
           commentData,
           { withCredentials: true }
         );
@@ -116,13 +116,13 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
         console.error(err);
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
 
   //   !!! que la page d'accueil s'actualise !!!
   const contextValues = useMemo(
     () => ({
-      backendUrl,
+      BASE_URL,
       cardList,
       createFrenchDate,
       createShortFrenchDate,
@@ -135,7 +135,7 @@ export function ArticleContextProvider({ children }: { children: React.ReactNode
       unlikePost,
     }),
     [
-      backendUrl,
+      BASE_URL,
       cardList,
       createFrenchDate,
       createShortFrenchDate,

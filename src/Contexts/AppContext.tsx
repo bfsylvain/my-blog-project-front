@@ -15,7 +15,7 @@ import { SignUpCredentials } from "../types/SignUpCredentials.type.tsx";
 const AppContext = createContext([() => {}]);
 
 export function AppContextProvider({ children }: { children: React.ReactNode }) {
-  const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
+  const BASE_URL: string = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
 
@@ -47,16 +47,16 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
 
   //Récupération du token
   const fetchToken = useCallback(async () => {
-    const userToken = await fetchTokenData(backendUrl);
+    const userToken = await fetchTokenData(BASE_URL);
     setUserInfo(userToken);
-  }, [backendUrl]);
+  }, [BASE_URL]);
 
   // connexion
   const signIn = useCallback(
     async (credentials: SignInCredentials) => {
       try {
         const response = await axios.post(
-          `${backendUrl}/api/signIn`,
+          `${BASE_URL}/api/signIn`,
           credentials,
           { withCredentials: true }
         );
@@ -72,7 +72,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
         console.error({ error: err });
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
 
   // création de compte
@@ -80,7 +80,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     async (credentials: SignUpCredentials) => {
       try {
         const response = await axios.post(
-          `${backendUrl}/api/signUp`,
+          `${BASE_URL}/api/signUp`,
           credentials,
           { withCredentials: true }
         );
@@ -103,7 +103,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
         console.error(err);
       }
     },
-    [backendUrl]
+    [BASE_URL]
   );
 
   // verification de concordance des mots de passe

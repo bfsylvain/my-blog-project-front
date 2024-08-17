@@ -11,7 +11,7 @@ type CardProps = {
   article: ArticleDetail;
 };
 
-const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
+const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
 
 export default function Card({ article }: CardProps) {
   // @ts-ignore
@@ -37,7 +37,7 @@ export default function Card({ article }: CardProps) {
           <div className="card-img-area">
             <img
               className="card-img"
-              src={`${backendUrl}/public${article.pictures[0]}`}
+              src={`${BASE_URL}/public${article.pictures[0]}`}
               alt="image"
             />
           </div>
@@ -48,7 +48,7 @@ export default function Card({ article }: CardProps) {
               <div className="author-area">
                 <img
                   className="author-img"
-                  src={`${backendUrl}/public${article.userAvatar}`}
+                  src={`${BASE_URL}/public${article.userAvatar}`}
                   alt="author-img"
                 />
                 <p className="author-name">{article.userPseudo}</p>

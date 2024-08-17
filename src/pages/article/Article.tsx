@@ -16,14 +16,14 @@ import { useCommentArticleMutation, useGetArticleByIdQuery } from "../../app/fea
 function Article() {
   const { id } = useParams();
   const userInfo: UserInfo = useOutletContext();
-  const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
+  const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
   const { data: article, error, isLoading } = useGetArticleByIdQuery(id as string);
   const [commentArticle] = useCommentArticleMutation();
   // @ts-ignore
   const { createFrenchDate } = UseArticle();
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
-  url(${backendUrl}/public${article?.pictures[0]})
+  url(${BASE_URL}/public${article?.pictures[0]})
   `;
 
   const [comment, setComment] = useState({
@@ -78,7 +78,7 @@ function Article() {
               <MDBCarousel showControls>
                 <MDBCarouselItem itemId={1}>
                   <img
-                    src={`${backendUrl}/public${article.pictures[0]}`}
+                    src={`${BASE_URL}/public${article.pictures[0]}`}
                     className="d-block w-100"
                     alt="..."
                   />

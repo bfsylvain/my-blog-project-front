@@ -8,14 +8,14 @@ type cardCommentProps = {
 };
 
 export default function CardComment({ comment }: cardCommentProps) {
-  const { createShortFrenchDate, backendUrl } = UseArticle();
+  const { createShortFrenchDate, BASE_URL } = UseArticle();
 
   return (
     <div className="card-comment">
       <section className="img-area">
         <img
           className="author-img"
-          src={`${backendUrl}/public${comment.userAvatar}`}
+          src={`${BASE_URL}/public${comment.userAvatar}`}
           alt="user"
         />
       </section>

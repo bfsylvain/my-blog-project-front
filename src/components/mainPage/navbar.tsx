@@ -24,7 +24,7 @@ type NavbarProps = {
 }
 export default function Navbar({ userInfo }: NavbarProps) {
   const [openNav, setOpenNav] = useState(false);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const dispatch = useAppDispatch();
 
@@ -32,7 +32,7 @@ export default function Navbar({ userInfo }: NavbarProps) {
 
   const disconnect = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/api/logOut`);
+      const response = await axios.get(`${BASE_URL}/api/logOut`);
       if (response) {
         Cookies.remove("jwt");
         window.location.reload();

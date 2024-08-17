@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ArticleDetail } from "../../../types/ArticleDetail.type.tsx";
 import axios from "axios";
 
-const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL: string = import.meta.env.VITE_BACKEND_URL;
 
 // interface ArticleState {
 //     __v: number,
@@ -36,7 +36,7 @@ const initialState: ArticleDetail[] = [];
 export const getAllArticlesAsync = createAsyncThunk(
   "articles/fetchAllArticles",
   async () => {
-    const response = await axios.get(`${backendUrl}/api/articles`);
+    const response = await axios.get(`${BASE_URL}/api/articles`);
     return response.data;
   }
 );

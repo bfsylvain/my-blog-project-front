@@ -4,7 +4,7 @@ import axios from "axios";
 import { UserInfo } from "../../../types/UserInfo.type.tsx";
 import { SignInCredentials } from "../../../types/SignInCredentials.type.tsx";
 
-const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL: string = import.meta.env.VITE_BACKEND_URL;
 
 const initialState: UserInfo = {
   avatar: "",
@@ -15,7 +15,7 @@ const initialState: UserInfo = {
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials: SignInCredentials) => {
-    const response = await axios.post(`${backendUrl}/api/signIn`, credentials, {
+    const response = await axios.post(`${BASE_URL}/api/signIn`, credentials, {
       withCredentials: true,
     });
     return response.data;
@@ -23,7 +23,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.get(`${backendUrl}/api/logOut`);
+  await axios.get(`${BASE_URL}/api/logOut`);
 });
 
 const authSlice = createSlice({
