@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ArticleDetail } from "../../../types/ArticleDetail.type.tsx";
 import { CommentToPost } from "../../../types/CommentToPost.tsx";
+import { error } from "console";
 
 // import & export du type à faire si le type se trouve dans la slice
 // import type { Post } from '@/features/posts/postsSlice'
@@ -19,6 +20,7 @@ export const articleApi = createApi({
     }),
     getArticleById: builder.query<ArticleDetail, string>({
       query: (id) => `articles/${id}`,
+      providesTags: (result, error, id) => [{type: "Article", id}]
     }),
     createNewArticle: builder.mutation<void, FormData>({
       query: (newArticle) => ({
@@ -46,7 +48,7 @@ export const articleApi = createApi({
         credentials: "include",
       }),
       invalidatesTags: (result, error, { articleId }) => [
-        { type: "Article", articleId },
+        { type: "Article", id: articleId },
       ],
     }),
     unlikeArticle: builder.mutation<
@@ -60,7 +62,7 @@ export const articleApi = createApi({
         credentials: "include",
       }),
       invalidatesTags: (result, error, { articleId }) => [
-        { type: "Article", articleId },
+        { type: "Article", id: articleId },
       ],
     }),
     commentArticle: builder.mutation<
@@ -70,10 +72,10 @@ export const articleApi = createApi({
       query: ({ articleId, commentData }) => ({
         url: `articles/${articleId}/comments`,
         method: "PATCH",
-        body: { commentData },
+        body: commentData,
         credentials: "include",
       }),
-      invalidatesTags: (result, error, { articleId }) => [
+      invalidatesTags: (result, error, {articleId} ) => [
         { type: "Article", articleId },
       ],
     }),

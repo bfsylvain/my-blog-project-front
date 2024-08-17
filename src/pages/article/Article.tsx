@@ -41,17 +41,17 @@ function Article() {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
-  const handleComment = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (comment.text) {
-      postComment(id, comment);
-      setComment({
-        userId: userInfo?.id,
-        userPseudo: userInfo?.pseudo,
-        text: "",
-      });
-    }
-  };
+  // const handleComment = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (comment.text) {
+  //     postComment(id, comment);
+  //     setComment({
+  //       userId: userInfo?.id,
+  //       userPseudo: userInfo?.pseudo,
+  //       text: "",
+  //     });
+  //   }
+  // };
 
   const handleCommentRTK = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
