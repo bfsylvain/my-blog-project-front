@@ -1,4 +1,3 @@
-// import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 import "./navbar.scss";
@@ -16,8 +15,6 @@ import {
 } from 'mdb-react-ui-kit';
 import { useState } from "react";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { logout } from "../../app/features/auth/authSlice.ts";
 
 type NavbarProps = {
   userInfo: UserInfo
@@ -25,10 +22,6 @@ type NavbarProps = {
 export default function Navbar({ userInfo }: NavbarProps) {
   const [openNav, setOpenNav] = useState(false);
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-
-  const dispatch = useAppDispatch();
-
-  const userConnectedRedux = useAppSelector((state) => state.auth);
 
   const disconnect = async () => {
     try {
@@ -73,9 +66,6 @@ export default function Navbar({ userInfo }: NavbarProps) {
               </MDBNavbarItem>
               <MDBNavbarItem> 
                 <MDBNavbarLink href="/counter">Counter</MDBNavbarLink>
-              </MDBNavbarItem>
-              <MDBNavbarItem>
-              {userConnectedRedux.id ? <MDBNavbarLink onClick={() => dispatch(logout())}>ReduxDisconnect</MDBNavbarLink>: <MDBNavbarLink href="/connexion">ReduxConnect</MDBNavbarLink>}
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>
