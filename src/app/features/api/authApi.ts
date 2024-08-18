@@ -18,7 +18,7 @@ export const AuthApi = rootApi.injectEndpoints({
         method: "GET"
       })
     }),
-    register: builder.mutation<void, SignUpCredentials>({
+    newRegister: builder.mutation<void, SignUpCredentials>({
       query: (credentials) => ({
         url: "signUp",
         method: "POST",
@@ -28,4 +28,4 @@ export const AuthApi = rootApi.injectEndpoints({
   }),
 });
 
-export const {useLoginMutation, useLogoutMutation} = AuthApi;
+export const {useLoginMutation, useLogoutMutation, useNewRegisterMutation} = AuthApi;

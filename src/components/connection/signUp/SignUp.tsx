@@ -1,9 +1,11 @@
 // import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
-import { useLoginMutation } from "../../../app/features/api/authApi.ts";
+import {SubmitHandler, useForm} from 'react-hook-form';
+import { useLoginMutation, useNewRegisterMutation } from "../../../app/features/api/authApi.ts";
 import { UseApp } from "../../../Contexts/AppContext.tsx";
 import SignIn from "../signIn/SignIn.tsx";
 import "./signUp.scss";
+import { SignUpForm } from "../../../types/SignUpForm.type.tsx";
 
 export default function SignUp() {
 
@@ -16,6 +18,7 @@ export default function SignUp() {
     setWrongId,
   } = UseApp();
 
+
   const [signUpForm, setSignUpForm] = useState({
     pseudo: "",
     email: "",
@@ -23,6 +26,7 @@ export default function SignUp() {
   });
   const [passWordVerification, setPasswordVerification] = useState("");
 
+  
   const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWrongId(false);
     setSignUpForm({ ...signUpForm, [e.target.id]: e.target.value });
@@ -30,16 +34,24 @@ export default function SignUp() {
   const handlePasswordVerification = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordVerification(e.target.value);
   };
-
+  
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signUp(signUpForm);
   };
 
-  const [register, {data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError} ] = useLoginMutation();
-  const handleRegisterRTK = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await register(signUpForm)
+  // const [register, {data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError} ] = useNewRegisterMutation();
+  // const handleRegisterRTK = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   await register(signUpForm)
+  // }
+
+  // le handleSubmit de react-hook-form a le preventDefault inclus !
+  const {register: registerForm, handleSubmit, formState: {errors}} = useForm<SignUpForm>();
+  
+  const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
+    console.log(data)
+    
   }
 
   return (
@@ -60,15 +72,17 @@ export default function SignUp() {
             </p>
           </div>
 
-          <form className="signup-form" onSubmit={handleLogin}>
+          {/* <form className="signup-form" onSubmit={handleLogin}> */}
+          <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
             <fieldset className="field pseudo">
               <label htmlFor="pseudo">Pseudo</label>
               <input
                 type="text"
+                {...registerForm("pseudo", {
+                  required: true
+                })}
                 id="pseudo"
                 name="pseudo"
-                value={signUpForm.pseudo}
-                onChange={handleFormValue}
                 className="field-input"
               />
             </fieldset>
@@ -76,10 +90,13 @@ export default function SignUp() {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                {...registerForm("email", {
+                  required: true,
+                  // pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a_z]{2-4}$/
+                }
+                )}
                 id="email"
                 name="email"
-                value={signUpForm.email}
-                onChange={handleFormValue}
                 className="field-input"
               />
             </fieldset>
@@ -87,10 +104,14 @@ export default function SignUp() {
               <label htmlFor="password">Mot de passe</label>
               <input
                 type="password"
+                {...registerForm("password", {
+                  required: true,
+                  minLength: 8,
+                  // definir ce que cela doit contenir
+                  validate: (value) => value.includes("@")
+                })}
                 id="password"
                 name="password"
-                value={signUpForm.password}
-                onChange={handleFormValue}
                 className="field-input"
               />
             </fieldset>
@@ -98,9 +119,11 @@ export default function SignUp() {
               <label htmlFor="verification">Vérification</label>
               <input
                 type="password"
-                id="verification"
-                name="verification"
-                value={passWordVerification}
+                {...registerForm("checkPassword", {
+                  required: true
+                })}
+                id="checkPassword"
+                name="checkPassword"
                 onChange={handlePasswordVerification}
                 className="field-input"
               />
