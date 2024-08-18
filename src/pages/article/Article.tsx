@@ -12,6 +12,7 @@ import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { useCommentArticleMutation, useGetArticleByIdQuery } from "../../app/features/api/articleApi.ts";
 import useDateTransform from "../../hooks/useDateTransform.ts";
+import { useAppSelector } from "../../app/hooks.ts";
 
 function Article() {
   const { id } = useParams();

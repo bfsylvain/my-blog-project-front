@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import axios from "axios";
 import { UserInfo } from "../../../types/UserInfo.type.tsx";
@@ -8,8 +8,9 @@ const BASE_URL: string = import.meta.env.VITE_BACKEND_URL;
 
 const initialState: UserInfo = {
   avatar: "",
-  id: "1",
+  id: "",
   pseudo: "",
+  email: ""
 };
 
 export const login = createAsyncThunk(
@@ -29,20 +30,28 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser(state, action: PayloadAction<UserInfo>) {
+      state.avatar = action.payload.avatar,
+      state.id = action.payload.id,
+      state.pseudo = action.payload.pseudo
+      state.email = action.payload.email
+    },
+    logout(state) {
+      state.avatar = ""
+      state.id = ""
+      state.pseudo = ""
+      state.email = ""
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         return action.payload;
       })
-      .addCase(logout.fulfilled, () => {
-        return {
-            avatar: "",
-            id: "",
-            pseudo: "",
-          };;
-      });
+
   },
 });
 
+export const {setUser} = authSlice.actions
 export default authSlice.reducer;

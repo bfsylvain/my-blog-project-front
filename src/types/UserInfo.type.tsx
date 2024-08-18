@@ -1,5 +1,6 @@
 export type UserInfo = {
     avatar: string,
     id: string,
-    pseudo: string
+    pseudo: string,
+    email: string
 }

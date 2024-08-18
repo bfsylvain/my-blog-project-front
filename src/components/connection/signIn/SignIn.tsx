@@ -1,16 +1,54 @@
 import { UseApp } from "../../../Contexts/AppContext.tsx";
 import "./signIn.scss";
+import { useLoginMutation } from "../../../app/features/api/authApi.ts";
+import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../app/hooks.ts";
+import {setUser} from "../../../app/features/auth/authSlice.ts";
 export default function SignIn() {
-  const { signIn, signInForm, setSignInForm, wrongId, setWrongId } = UseApp();
+
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  
+  const [wrongId, setWrongId] = useState(false);
+  const [signInForm, setSignInForm] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWrongId(false);
     setSignInForm({ ...signInForm, [e.target.id]: e.target.value });
   };
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const [
+    login,
+    {
+      data: loginData,
+      isSuccess: isLoginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
+  ] = useLoginMutation();
+
+  const handleLoginRTK = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn(signInForm);
+    await login(signInForm);
   };
+
+  useEffect(() => {
+    if (isLoginSuccess) {
+      dispatch(setUser(loginData))
+      navigate("/articles");
+    }
+    if (isLoginError) {
+      setWrongId(true);
+      setSignInForm({
+        email: "",
+        password: "",
+      });
+    }
+  }, [isLoginSuccess, isLoginError]);
 
   return (
     <div>
@@ -20,7 +58,7 @@ export default function SignIn() {
           Identifiants incorrects !
         </p>
       </div>
-      <form className="signin-form" onSubmit={handleLogin}>
+      <form className="signin-form" onSubmit={handleLoginRTK}>
         <fieldset className="field email">
           <label htmlFor="email">Email</label>
           <input
