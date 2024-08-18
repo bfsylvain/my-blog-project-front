@@ -11,19 +11,19 @@ const redHeart = "./icons/red-heart-icon.svg";
 
 type LikeAreaProps = {
   article: ArticleDetail;
-  userInfo: UserInfo;
+  userInfo: UserInfo | null;
 };
 
 export default function LikeArea({ article, userInfo }: LikeAreaProps) {
   const [likeArticle] = useLikeArticleMutation();
   const [unlikeArticle] = useUnlikeArticleMutation();
-  const likedArticle = article.likers.includes(userInfo.id)
+  const likedArticle = article.likers.includes(userInfo?.id)
 
   const handleLike = async () => {
     try {
       await likeArticle({
         articleId: article._id,
-        userId: userInfo.id,
+        userId: userInfo?.id,
       }).unwrap();
     } catch (error) {
       console.error("Failed to like article", error);
@@ -34,7 +34,7 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
     try {
       await unlikeArticle({
         articleId: article._id,
-        userId: userInfo.id,
+        userId: userInfo?.id,
       }).unwrap();
     } catch (error) {
       console.error("Failed to unlike article", error);
