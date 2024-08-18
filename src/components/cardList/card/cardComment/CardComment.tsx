@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import "./cardComment.scss";
-import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import { UserComment } from "../../../../types/UserComment.type.tsx";
 import useDateTransform from "../../../../hooks/useDateTransform.ts";
 

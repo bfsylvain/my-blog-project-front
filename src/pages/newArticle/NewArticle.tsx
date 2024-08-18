@@ -1,11 +1,8 @@
 import { useState } from "react";
 import "./newArticle.scss";
 import { UseApp } from "../../Contexts/AppContext.tsx";
-import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useNavigate } from "react-router-dom";
-import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
 import { useCreateNewArticleMutation } from "../../app/features/api/articleApi.ts";
-import { ArticleToPost } from "../../types/ArticleToPost.type.tsx";
 const AddIcon = "./icons/add-round-icon.svg";
 
 export default function NewArticle() {

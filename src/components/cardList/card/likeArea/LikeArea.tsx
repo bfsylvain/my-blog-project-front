@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import "./likeArea.scss";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";

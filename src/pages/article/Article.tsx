@@ -6,7 +6,6 @@ import {
 } from "mdb-react-ui-kit";
 import "./article.scss";
 import { useOutletContext, useParams } from "react-router-dom";
-import { UseArticle } from "../../Contexts/ArticleContext.tsx";
 import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea.tsx";
 import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
