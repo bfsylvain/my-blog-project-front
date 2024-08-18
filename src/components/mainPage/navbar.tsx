@@ -71,6 +71,9 @@ export default function Navbar({ userInfo }: NavbarProps) {
               <MDBNavbarItem>
                 {userInfo ? <MDBNavbarLink onClick={disconnect}>Déconnexion</MDBNavbarLink>: <MDBNavbarLink href="/connexion">Connexion</MDBNavbarLink>}
               </MDBNavbarItem>
+              <MDBNavbarItem> 
+                <MDBNavbarLink href="/counter">Counter</MDBNavbarLink>
+              </MDBNavbarItem>
               <MDBNavbarItem>
               {userConnectedRedux.id ? <MDBNavbarLink onClick={() => dispatch(logout())}>ReduxDisconnect</MDBNavbarLink>: <MDBNavbarLink href="/connexion">ReduxConnect</MDBNavbarLink>}
               </MDBNavbarItem>

@@ -14,6 +14,7 @@ import HomePage from "./pages/homePage/HomePage.tsx";
 import { Provider } from "react-redux";
 import  store, { persistor }  from "./app/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import Counter from "./pages/counter/Counter.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         path: "/connexion",
         element: <Connection />,
       },
+      {
+        path: "/counter",
+        element: <Counter/>
+      }
     ],
   },
 ]);
