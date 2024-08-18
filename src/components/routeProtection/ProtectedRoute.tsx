@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { Navigate, useOutletContext } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks.ts";
 function ProtectedRoute({ element }) {
-    const userInfo = useOutletContext();
-  return userInfo ? (
+    const userRTK = useAppSelector((state) => state.auth)
+  return userRTK.id ? (
     element
   ) : (
     <Navigate to="/articles" replace />

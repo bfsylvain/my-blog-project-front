@@ -5,19 +5,18 @@ import {
   MDBCarouselItem,
 } from "mdb-react-ui-kit";
 import "./article.scss";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import CommentArea from "../../components/article/CommentArea.tsx";
 import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
-import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { useCommentArticleMutation, useGetArticleByIdQuery } from "../../app/features/api/articleApi.ts";
 import useDateTransform from "../../hooks/useDateTransform.ts";
 import { useAppSelector } from "../../app/hooks.ts";
 
 function Article() {
   const { id } = useParams();
-  const userInfo: UserInfo = useOutletContext();
   const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
+  const userRTK = useAppSelector((state) => state.auth)
 
   const { data: article, error, isLoading } = useGetArticleByIdQuery(id as string);
   const [commentArticle] = useCommentArticleMutation();
@@ -30,8 +29,8 @@ function Article() {
   `;
 
   const [comment, setComment] = useState({
-    userId: userInfo?.id,
-    userPseudo: userInfo?.pseudo,
+    userId: userRTK.id,
+    userPseudo: userRTK.pseudo,
     text: "",
   });
 
@@ -49,8 +48,8 @@ function Article() {
       try {
         await commentArticle({articleId: id as string, commentData: comment}).unwrap();
         setComment({
-          userId: userInfo?.id,
-          userPseudo: userInfo?.pseudo,
+          userId: userRTK.id,
+          userPseudo: userRTK.pseudo,
           text: "",
         });  
       } catch(error) {

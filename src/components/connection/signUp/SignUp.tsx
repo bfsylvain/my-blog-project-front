@@ -1,21 +1,27 @@
 // import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import { useLoginMutation } from "../../../app/features/api/authApi.ts";
 import { UseApp } from "../../../Contexts/AppContext.tsx";
 import SignIn from "../signIn/SignIn.tsx";
 import "./signUp.scss";
 
 export default function SignUp() {
+
   const {
     errorMessage,
     formSubmit,
-    signUpForm,
-    setSignUpForm,
     passwordMatch,
-    passWordVerification,
-    setPasswordVerification,
     signUp,
     wrongId,
     setWrongId,
   } = UseApp();
+
+  const [signUpForm, setSignUpForm] = useState({
+    pseudo: "",
+    email: "",
+    password: "",
+  });
+  const [passWordVerification, setPasswordVerification] = useState("");
 
   const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWrongId(false);
@@ -29,6 +35,12 @@ export default function SignUp() {
     e.preventDefault();
     signUp(signUpForm);
   };
+
+  const [register, {data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError} ] = useLoginMutation();
+  const handleRegisterRTK = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await register(signUpForm)
+  }
 
   return (
     <div>

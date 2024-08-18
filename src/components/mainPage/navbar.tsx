@@ -1,7 +1,5 @@
-import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 import "./navbar.scss";
-import axios from "axios";
 import {
   MDBContainer,
   MDBNavbar,
@@ -11,30 +9,29 @@ import {
   MDBNavbarItem,
   MDBNavbarLink,
   MDBCollapse,
-  MDBIcon
-} from 'mdb-react-ui-kit';
+  MDBIcon,
+} from "mdb-react-ui-kit";
 import { useState } from "react";
-import { UserInfo } from "../../types/UserInfo.type.tsx";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { logoutUser } from "../../app/features/auth/authSlice.ts";
+import { useLogoutMutation } from "../../app/features/api/authApi.ts";
 
-type NavbarProps = {
-  userInfo: UserInfo
-}
-export default function Navbar({ userInfo }: NavbarProps) {
+export default function Navbar() {
   const [openNav, setOpenNav] = useState(false);
-  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const disconnect = async () => {
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.id);
+
+  const disconnectRTK = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/logOut`);
-      if (response) {
-        Cookies.remove("jwt");
-        window.location.reload();
-      } else {
-        return null;
-      }
+      await logout().unwrap();
+      Cookies.remove("jwt");
+      dispatch(logoutUser());
+      // Voir pour utiliser RTK query
+      window.location.reload();
     } catch (err) {
       console.error(err);
-      return null;
     }
   };
 
@@ -58,24 +55,26 @@ export default function Navbar({ userInfo }: NavbarProps) {
                   Accueil
                 </MDBNavbarLink>
               </MDBNavbarItem>
-              <MDBNavbarItem> 
+              <MDBNavbarItem>
                 <MDBNavbarLink href="/articles">Articles</MDBNavbarLink>
               </MDBNavbarItem>
               <MDBNavbarItem>
-                {userInfo ? <MDBNavbarLink onClick={disconnect}>Déconnexion</MDBNavbarLink>: <MDBNavbarLink href="/connexion">Connexion</MDBNavbarLink>}
+                {userId ? (
+                  <MDBNavbarLink onClick={disconnectRTK}>
+                    Déconnexion
+                  </MDBNavbarLink>
+                ) : (
+                  <MDBNavbarLink href="/connexion">Connexion</MDBNavbarLink>
+                )}
               </MDBNavbarItem>
-              <MDBNavbarItem> 
+              <MDBNavbarItem>
                 <MDBNavbarLink href="/counter">Counter</MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
-      
     </>
   );
 }
 
-Navbar.propTypes = {
-  userInfo: PropTypes.object,
-};

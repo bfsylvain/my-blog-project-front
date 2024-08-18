@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { rootApi } from "./rootApi.ts";
 import { SignInCredentials } from "../../../types/SignInCredentials.type.tsx";
+import { SignUpCredentials } from "../../../types/SignUpCredentials.type.tsx";
 
 export const AuthApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,12 +12,15 @@ export const AuthApi = rootApi.injectEndpoints({
         body: credentials
       })
     }),
-    logout: builder.query<void, void>({
-      query: () => "logOut"
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "logOut",
+        method: "GET"
+      })
     }),
-    register: builder.mutation<void, void>({
+    register: builder.mutation<void, SignUpCredentials>({
       query: (credentials) => ({
-        url: "",
+        url: "signUp",
         method: "POST",
         body: credentials
       })
@@ -24,4 +28,4 @@ export const AuthApi = rootApi.injectEndpoints({
   }),
 });
 
-export const {useLoginMutation, useLogoutQuery} = AuthApi;
+export const {useLoginMutation, useLogoutMutation} = AuthApi;

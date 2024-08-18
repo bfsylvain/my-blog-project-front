@@ -5,12 +5,14 @@ import { UseApp } from "../../../Contexts/AppContext.tsx";
 import "./log.scss";
 
 export default function Log() {
+  // @ts-ignore
   const { setFormSubmit } = UseApp();
   const [signIn, setSignIn] = useState(true);
   const [signUp, setSignUp] = useState(false);
 
-  const handleForms = (e) => {
-    if (e.target.id === "connection") {
+  const handleForms = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.currentTarget as HTMLElement;
+    if (target.id === "connection") {
       setFormSubmit(false);
       setSignIn(true);
       setSignUp(false);
@@ -26,14 +28,14 @@ export default function Log() {
           <ul className="sidebar-list">
             <li
               id="connection"
-              className={signIn ? "active" : null}
+              className={signIn ? "active" : undefined}
               onClick={handleForms}
             >
               Connexion
             </li>
             <li
               id="inscription"
-              className={signUp ? "active" : null}
+              className={signUp ? "active" : undefined}
               onClick={handleForms}
             >
               Inscription

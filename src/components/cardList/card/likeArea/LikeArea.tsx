@@ -1,29 +1,28 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./likeArea.scss";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
 import { ArticleDetail } from "../../../../types/ArticleDetail.type.tsx";
-import { UserInfo } from "../../../../types/UserInfo.type.tsx";
 import { useLikeArticleMutation, useUnlikeArticleMutation } from "../../../../app/features/api/articleApi.ts";
+import { useAppSelector } from "../../../../app/hooks.ts";
 const emptyHeart = "./icons/empty-heart-icon.svg";
 const redHeart = "./icons/red-heart-icon.svg";
 
 type LikeAreaProps = {
   article: ArticleDetail;
-  userInfo: UserInfo | undefined;
 };
 
-export default function LikeArea({ article, userInfo }: LikeAreaProps) {
+export default function LikeArea({ article }: LikeAreaProps) {
   const [likeArticle] = useLikeArticleMutation();
   const [unlikeArticle] = useUnlikeArticleMutation();
-  const likedArticle = article.likers.includes(userInfo?.id)
+  const userRTK = useAppSelector((state) => state.auth);
+  const likedArticle = article.likers.includes(userRTK.id)
 
   const handleLike = async () => {
     try {
       await likeArticle({
         articleId: article._id,
-        userId: userInfo?.id,
+        userId: userRTK.id,
       }).unwrap();
     } catch (error) {
       console.error("Failed to like article", error);
@@ -34,7 +33,7 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
     try {
       await unlikeArticle({
         articleId: article._id,
-        userId: userInfo?.id,
+        userId: userRTK.id,
       }).unwrap();
     } catch (error) {
       console.error("Failed to unlike article", error);
@@ -44,7 +43,7 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
 
   return (
     <section className="action-area">
-      {!userInfo && (
+      {!userRTK.id && (
         <Popup
           trigger={<img className="like-img" src={emptyHeart} alt="like" />}
           position={["bottom center", "bottom right", "bottom left"]}
@@ -53,10 +52,10 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
           <div>connectez vous pour liker un post !</div>
         </Popup>
       )}
-      {userInfo && !likedArticle && (
+      {userRTK.id && !likedArticle && (
         <img className="like-img" src={emptyHeart} alt="like" onClick={handleLike} />
       )}
-      {userInfo && likedArticle && (
+      {userRTK.id && likedArticle && (
         <img className="like-img" src={redHeart} alt="like" onClick={handleUnlike} />
       )}
     </section>
@@ -65,5 +64,4 @@ export default function LikeArea({ article, userInfo }: LikeAreaProps) {
 
 LikeArea.propTypes = {
   article: PropTypes.object.isRequired,
-  userInfo: PropTypes.object,
 };

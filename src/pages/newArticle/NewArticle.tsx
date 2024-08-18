@@ -1,18 +1,18 @@
 import { useState } from "react";
 import "./newArticle.scss";
-import { UseApp } from "../../Contexts/AppContext.tsx";
 import { useNavigate } from "react-router-dom";
 import { useCreateNewArticleMutation } from "../../app/features/api/articleApi.ts";
+import { useAppSelector } from "../../app/hooks.ts";
 const AddIcon = "./icons/add-round-icon.svg";
 
 export default function NewArticle() {
-  const { userInfo } = UseApp();
+  const userRTK = useAppSelector((state) => state.auth);
   const [createNewArticle] = useCreateNewArticleMutation();
   const navigate = useNavigate();
 
   const [articleValue, setArticleValue] = useState({
-    userId: userInfo.id,
-    userPseudo: userInfo.pseudo,
+    userId: userRTK.id,
+    userPseudo: userRTK.pseudo,
     title: "",
     text: "",
   });

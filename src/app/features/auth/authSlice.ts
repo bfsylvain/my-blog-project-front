@@ -23,10 +23,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.get(`${BASE_URL}/api/logOut`);
-});
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -37,21 +33,14 @@ const authSlice = createSlice({
       state.pseudo = action.payload.pseudo
       state.email = action.payload.email
     },
-    logout(state) {
+    logoutUser(state) {
       state.avatar = ""
       state.id = ""
       state.pseudo = ""
       state.email = ""
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(login.fulfilled, (state, action) => {
-        return action.payload;
-      })
-
-  },
 });
 
-export const {setUser} = authSlice.actions
+export const {setUser, logoutUser} = authSlice.actions
 export default authSlice.reducer;

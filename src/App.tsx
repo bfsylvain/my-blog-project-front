@@ -6,9 +6,11 @@ import { Outlet } from "react-router-dom";
 import { UseApp } from "./Contexts/AppContext.tsx";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useAppDispatch } from "./app/hooks.ts";
+import {setUser, logoutUser} from "./app/features/auth/authSlice.ts";
 
 function App() {
-  const { userInfo, setUserInfo } = UseApp();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const jwtValue = document.cookie
@@ -17,20 +19,18 @@ function App() {
       ?.split("=")[1];
     if (jwtValue) {
       const decodedToken = jwtDecode(jwtValue);
-      setUserInfo({
-        id: decodedToken.id.id,
-        pseudo: decodedToken.id.pseudo,
-        avatar: decodedToken.id.avatar,
-      });
+      dispatch(setUser(decodedToken))
+      
+    } else {
+      dispatch(logoutUser())
     }
-  }, [setUserInfo]);
+  }, []);
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
-
+      <Navbar />
       <main>
-        <Outlet context={userInfo} />
+        <Outlet />
       </main>
     </>
   );
