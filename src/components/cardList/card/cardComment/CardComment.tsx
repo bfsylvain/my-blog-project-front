@@ -2,13 +2,17 @@ import PropTypes from "prop-types";
 import "./cardComment.scss";
 import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import { UserComment } from "../../../../types/UserComment.type.tsx";
+import useDateTransform from "../../../../hooks/useDateTransform.ts";
 
 type cardCommentProps = {
   comment: UserComment;
 };
 
 export default function CardComment({ comment }: cardCommentProps) {
-  const { createShortFrenchDate, BASE_URL } = UseArticle();
+
+  const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
+
+  const { frenchDateShort } = useDateTransform();
 
   return (
     <div className="card-comment">
@@ -22,9 +26,7 @@ export default function CardComment({ comment }: cardCommentProps) {
       <section className="comment-area">
         <header className="comment-header">
           <p className="commenter-name">{comment?.userPseudo}</p>
-          <p className="comment-date">
-            {createShortFrenchDate(comment.timestamp)}
-          </p>
+          <p className="comment-date">{frenchDateShort(comment.timestamp)}</p>
         </header>
         <div className="comment-text-area">
           <p className="comment-text">{comment?.text}</p>

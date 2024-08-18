@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./card.scss";
-import { UseArticle } from "../../../../Contexts/ArticleContext.tsx";
 import { UseApp } from "../../../../Contexts/AppContext.tsx";
 import LikeArea from "../likeArea/LikeArea.tsx";
 import { ArticleDetail } from "../../../../types/ArticleDetail.type.tsx";
 import { useDeleteArticleMutation } from "../../../../app/features/api/articleApi.ts";
+import useDateTransform from "../../../../hooks/useDateTransform.ts";
 
 type CardProps = {
   article: ArticleDetail;
@@ -16,9 +16,10 @@ const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
 export default function Card({ article }: CardProps) {
   // @ts-ignore
   const { userInfo } = UseApp();
-  // @ts-ignore
-  const { createShortFrenchDate } = UseArticle();
-  const creationDate = article ? createShortFrenchDate(article.updatedAt) : "";
+
+  const {frenchDateShort} = useDateTransform();
+
+  const creationDate = article ? frenchDateShort(article.updatedAt) : "";
 
   const [deleteArticle] = useDeleteArticleMutation();
 

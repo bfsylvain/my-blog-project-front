@@ -15,8 +15,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { articleApi } from "./features/api/articleApi.ts";
-import { AuthApi } from "./features/api/authApi.ts";
 import articleReducer from "./features/article/articleSlice.ts";
 import counterReducer from "./features/counter/counterSlice.ts";
 import authReducer from "./features/auth/authSlice.ts";

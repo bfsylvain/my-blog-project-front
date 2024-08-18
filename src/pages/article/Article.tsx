@@ -12,15 +12,18 @@ import CommentArea from "../../components/article/CommentArea.tsx";
 import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
 import { UserInfo } from "../../types/UserInfo.type.tsx";
 import { useCommentArticleMutation, useGetArticleByIdQuery } from "../../app/features/api/articleApi.ts";
+import useDateTransform from "../../hooks/useDateTransform.ts";
 
 function Article() {
   const { id } = useParams();
   const userInfo: UserInfo = useOutletContext();
   const BASE_URL: string = import.meta.env.VITE_BACKEND_URL as string;
+
   const { data: article, error, isLoading } = useGetArticleByIdQuery(id as string);
   const [commentArticle] = useCommentArticleMutation();
-  // @ts-ignore
-  const { createFrenchDate } = UseArticle();
+
+  const {frenchDateLong} = useDateTransform();
+
   const headerBackgroudImage = `
   linear-gradient(to bottom, rgba(11, 32, 47, 1) 0%, rgba(11, 32, 47, 0) 66%),
   url(${BASE_URL}/public${article?.pictures[0]})
@@ -31,9 +34,10 @@ function Article() {
     userPseudo: userInfo?.pseudo,
     text: "",
   });
+
   const creationDate = article?.createdAt
-    ? createFrenchDate(article.createdAt)
-    : "Date non disponible";
+  ? frenchDateLong(article.createdAt)
+  : "Date non disponible";
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setComment({ ...comment, [e.target.name]: e.target.value });
