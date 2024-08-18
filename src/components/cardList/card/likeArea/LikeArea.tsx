@@ -11,7 +11,7 @@ const redHeart = "./icons/red-heart-icon.svg";
 
 type LikeAreaProps = {
   article: ArticleDetail;
-  userInfo: UserInfo | null;
+  userInfo: UserInfo | undefined;
 };
 
 export default function LikeArea({ article, userInfo }: LikeAreaProps) {
