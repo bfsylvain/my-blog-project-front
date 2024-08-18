@@ -8,7 +8,6 @@ import Article from "./pages/article/Article.tsx";
 import NewArticle from "./pages/newArticle/NewArticle.tsx";
 import Connection from "./pages/connection/Connection.tsx";
 import { AppContextProvider } from "./Contexts/AppContext.tsx";
-import { ArticleContextProvider } from "./Contexts/ArticleContext.tsx";
 import ProtectedRoute from "./components/routeProtection/ProtectedRoute.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 
@@ -36,25 +35,19 @@ const router = createBrowserRouter([
       {
         path: "/articles",
         element: (
-          <ArticleContextProvider>
             <CardList />
-          </ArticleContextProvider>
         ),
       },
       {
         path: "/article/:id",
         element: (
-          <ArticleContextProvider>
             <Article />
-          </ArticleContextProvider>
         ),
       },
       {
         path: "/new-article",
         element: (
-          <ArticleContextProvider>
             <ProtectedRoute element={<NewArticle />} />
-          </ArticleContextProvider>
         ),
       },
       {
