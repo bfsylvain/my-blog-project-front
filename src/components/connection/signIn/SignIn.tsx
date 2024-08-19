@@ -1,16 +1,17 @@
-import { UseApp } from "../../../Contexts/AppContext.tsx";
-import "./signIn.scss";
-import { useLoginMutation } from "../../../app/features/api/authApi.ts";
 import { FormEvent, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../../app/features/api/authApi.ts";
+import { setUser } from "../../../app/features/auth/authSlice.ts";
 import { useAppDispatch } from "../../../app/hooks.ts";
-import {setUser} from "../../../app/features/auth/authSlice.ts";
+import { SignUpForm } from "../../../types/SignUpForm.type.tsx";
+import "./signIn.scss";
+import { SignInCredentials } from "../../../types/SignInCredentials.type.tsx";
 
 export default function SignIn() {
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  
+
   const [wrongId, setWrongId] = useState(false);
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -32,14 +33,9 @@ export default function SignIn() {
     },
   ] = useLoginMutation();
 
-  const handleLoginRTK = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await login(signInForm);
-  };
-
   useEffect(() => {
     if (isLoginSuccess) {
-      dispatch(setUser(loginData))
+      dispatch(setUser(loginData));
       navigate("/articles");
     }
     if (isLoginError) {
@@ -51,6 +47,12 @@ export default function SignIn() {
     }
   }, [isLoginSuccess, isLoginError]);
 
+  const {register: registerForm, handleSubmit, formState: {errors}} = useForm<SignInCredentials>();
+
+  const onSubmit: SubmitHandler<SignInCredentials> = async (data) => {
+    await login(data);
+  };
+
   return (
     <div>
       <h1>Connection</h1>
@@ -59,29 +61,33 @@ export default function SignIn() {
           Identifiants incorrects !
         </p>
       </div>
-      <form className="signin-form" onSubmit={handleLoginRTK}>
+      <form className="signin-form" onSubmit={handleSubmit(onSubmit)}>
         <fieldset className="field email">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            name="email"
             className="field-input"
-            value={signInForm.email}
-            onChange={handleFormValue}
+            {...registerForm("email", {
+              required: "email nécessaire"
+            })}
+            name="email"
           />
         </fieldset>
+        {errors.email && <div>{errors.email.message}</div>}
         <fieldset className="field password">
           <label htmlFor="password">Mot de passe</label>
           <input
             type="password"
             id="password"
+            {...registerForm("password", {
+              required: "Mot de passe écessaire"
+            })}
             name="password"
             className="field-input"
-            value={signInForm.password}
-            onChange={handleFormValue}
           />
         </fieldset>
+        {errors.password && <div>{errors.password.message}</div>}
         <div className="button-area">
           <input type="submit" value="Se connecter" className="submit-btn" />
         </div>
