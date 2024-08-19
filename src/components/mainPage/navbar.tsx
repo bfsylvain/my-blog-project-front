@@ -26,10 +26,9 @@ export default function Navbar() {
   const disconnectRTK = async () => {
     try {
       await logout().unwrap();
-      // Cookies.remove("jwt");
       dispatch(logoutUser());
       // Voir pour utiliser RTK query
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       console.error(err);
     }
