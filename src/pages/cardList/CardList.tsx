@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Card from "../../components/cardList/card/card/Card.tsx";
 import "./cardList.scss";
+import Loader from "../../loaders/spinnerLoader/SpinnerLoader.jsx";
 import { ArticleDetail } from "../../types/ArticleDetail.type.tsx";
 import { useGetArticlesQuery } from "../../app/features/api/articleApi.ts";
 import { useAppSelector } from "../../app/hooks.ts";
@@ -22,7 +23,7 @@ function CardList() {
       {error ? (
         <>An error occured...</>
       ) : isLoading ? (
-        <>Loading....</>
+        <Loader/>
       ) : articleListRTK ? (
         <section className="card-area">
           {articleListRTK.map((article: ArticleDetail) => (

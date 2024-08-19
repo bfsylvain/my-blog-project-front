@@ -1,14 +1,13 @@
 // import axios from "axios";
-import { FormEvent, useEffect, useState } from "react";
-import {SubmitHandler, useForm} from 'react-hook-form';
-import { useLoginMutation, useNewRegisterMutation } from "../../../app/features/api/authApi.ts";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { UseApp } from "../../../Contexts/AppContext.tsx";
+import { SignUpForm, signUpSchema } from "../../../types/SignUpForm.type.tsx";
 import SignIn from "../signIn/SignIn.tsx";
 import "./signUp.scss";
-import { SignUpForm } from "../../../types/SignUpForm.type.tsx";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignUp() {
-
   const {
     errorMessage,
     formSubmit,
@@ -18,27 +17,27 @@ export default function SignUp() {
     setWrongId,
   } = UseApp();
 
-
-  const [signUpForm, setSignUpForm] = useState({
-    pseudo: "",
-    email: "",
-    password: "",
-  });
+  // const [signUpForm, setSignUpForm] = useState({
+  //   pseudo: "",
+  //   email: "",
+  //   password: "",
+  // });
   const [passWordVerification, setPasswordVerification] = useState("");
 
-  
-  const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWrongId(false);
-    setSignUpForm({ ...signUpForm, [e.target.id]: e.target.value });
-  };
-  const handlePasswordVerification = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setWrongId(false);
+  //   setSignUpForm({ ...signUpForm, [e.target.id]: e.target.value });
+  // };
+  const handlePasswordVerification = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPasswordVerification(e.target.value);
   };
-  
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    signUp(signUpForm);
-  };
+
+  // const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   signUp(signUpForm);
+  // };
 
   // const [register, {data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError} ] = useNewRegisterMutation();
   // const handleRegisterRTK = async (e: FormEvent<HTMLFormElement>) => {
@@ -47,13 +46,24 @@ export default function SignUp() {
   // }
 
   // le handleSubmit de react-hook-form a le preventDefault inclus !
-  const {register: registerForm, handleSubmit, formState: {errors}} = useForm<SignUpForm>();
-  
-  const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
-    console.log(data)
-    
-  }
+  const {
+    register: registerForm,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpForm>({
+    resolver: zodResolver(signUpSchema),
+  });
 
+  const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
+    try {
+      await signUp(data);
+    } catch (error) {
+      setError("root", {
+        message: "Identifiants incorrects",
+      });
+    }
+  };
   return (
     <div>
       {formSubmit ? (
@@ -78,56 +88,48 @@ export default function SignUp() {
               <label htmlFor="pseudo">Pseudo</label>
               <input
                 type="text"
-                {...registerForm("pseudo", {
-                  required: true
-                })}
+                {...registerForm("pseudo")}
                 id="pseudo"
                 name="pseudo"
                 className="field-input"
               />
             </fieldset>
+            {errors.pseudo && <div>{errors.pseudo.message}</div>}
             <fieldset className="field email">
               <label htmlFor="email">Email</label>
               <input
-                type="email"
-                {...registerForm("email", {
-                  required: true,
-                  // pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a_z]{2-4}$/
-                }
-                )}
+                type="text"
+                {...registerForm("email")}
                 id="email"
                 name="email"
                 className="field-input"
               />
             </fieldset>
+            {errors.email && <div>{errors.email.message}</div>}
             <fieldset className="field password">
               <label htmlFor="password">Mot de passe</label>
               <input
                 type="password"
-                {...registerForm("password", {
-                  required: true,
-                  minLength: 8,
-                  // definir ce que cela doit contenir
-                  validate: (value) => value.includes("@")
-                })}
+                {...registerForm("password")}
                 id="password"
                 name="password"
                 className="field-input"
               />
             </fieldset>
+            {errors.password && <div>{errors.password.message}</div>}
+
             <fieldset className="field verification">
               <label htmlFor="verification">Vérification</label>
               <input
                 type="password"
-                {...registerForm("checkPassword", {
-                  required: true
-                })}
+                {...registerForm("checkPassword")}
                 id="checkPassword"
                 name="checkPassword"
                 onChange={handlePasswordVerification}
                 className="field-input"
               />
             </fieldset>
+            {errors.checkPassword && <div>{errors.checkPassword.message}</div>}
             <div className="error-container">
               <p className={`error-message ${!passwordMatch ? "active" : ""}`}>
                 Mot de passe différent
@@ -136,8 +138,9 @@ export default function SignUp() {
             <div className="button-area">
               <input
                 type="submit"
-                value="Se connecter"
+                value={isSubmitting ? "En attente" : "Se connecter"}
                 className="submit-btn"
+                disabled={isSubmitting}
               />
             </div>
           </form>

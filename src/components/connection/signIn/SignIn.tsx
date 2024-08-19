@@ -1,12 +1,15 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../../app/features/api/authApi.ts";
 import { setUser } from "../../../app/features/auth/authSlice.ts";
 import { useAppDispatch } from "../../../app/hooks.ts";
-import { SignUpForm } from "../../../types/SignUpForm.type.tsx";
+import {
+  SignInCredentials,
+  signInSchema,
+} from "../../../types/SignInCredentials.type.tsx";
 import "./signIn.scss";
-import { SignInCredentials } from "../../../types/SignInCredentials.type.tsx";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignIn() {
   const dispatch = useAppDispatch();
@@ -18,10 +21,10 @@ export default function SignIn() {
     password: "",
   });
 
-  const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWrongId(false);
-    setSignInForm({ ...signInForm, [e.target.id]: e.target.value });
-  };
+  // const handleFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setWrongId(false);
+  //   setSignInForm({ ...signInForm, [e.target.id]: e.target.value });
+  // };
 
   const [
     login,
@@ -46,20 +49,30 @@ export default function SignIn() {
       });
     }
   }, [isLoginSuccess, isLoginError]);
-
-  const {register: registerForm, handleSubmit, formState: {errors}} = useForm<SignInCredentials>();
+  const {
+    register: registerForm,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInCredentials>({
+    resolver: zodResolver(signInSchema),
+  });
 
   const onSubmit: SubmitHandler<SignInCredentials> = async (data) => {
-    await login(data);
+    const response = await login(data);
+    if (response.error) {
+      setError("root", {
+        message: "Identifiants incorrects",
+      });
+    }
   };
-
   return (
     <div>
-      <h1>Connection</h1>
+      <h1>Connexion</h1>
       <div className="error-container">
-        <p className={`error-message ${wrongId ? "active" : ""}`}>
-          Identifiants incorrects !
-        </p>
+        {errors.root && (
+          <p className={"error-message active"}>{errors.root.message}</p>
+        )}
       </div>
       <form className="signin-form" onSubmit={handleSubmit(onSubmit)}>
         <fieldset className="field email">
@@ -69,7 +82,7 @@ export default function SignIn() {
             id="email"
             className="field-input"
             {...registerForm("email", {
-              required: "email nécessaire"
+              required: "Email nécessaire",
             })}
             name="email"
           />
@@ -81,7 +94,7 @@ export default function SignIn() {
             type="password"
             id="password"
             {...registerForm("password", {
-              required: "Mot de passe écessaire"
+              required: "Mot de passe écessaire",
             })}
             name="password"
             className="field-input"
@@ -89,7 +102,12 @@ export default function SignIn() {
         </fieldset>
         {errors.password && <div>{errors.password.message}</div>}
         <div className="button-area">
-          <input type="submit" value="Se connecter" className="submit-btn" />
+          <input
+            type="submit"
+            value={isSubmitting ? "En attente" : "Se connecter"}
+            className="submit-btn"
+            disabled={isSubmitting}
+          />
         </div>
       </form>
     </div>
