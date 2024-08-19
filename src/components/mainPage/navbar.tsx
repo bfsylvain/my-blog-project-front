@@ -27,8 +27,6 @@ export default function Navbar() {
     try {
       await logout().unwrap();
       dispatch(logoutUser());
-      // Voir pour utiliser RTK query
-      // window.location.reload();
     } catch (err) {
       console.error(err);
     }
